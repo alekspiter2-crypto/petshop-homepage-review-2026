@@ -1,0 +1,30 @@
+{
+  "retrievedAt": "2026-07-16",
+  "source": "https://www.petshop.ru/",
+  "products": {
+    "savita": {
+      "images": 13,
+      "url": "https://www.petshop.ru/catalog/cats/food/holistic/dlya-koshek-sukhie-korma/renal_suhoj_profilakticheskij_korm_dlya_koshek_dlya_podderzhaniya_zdorovya_pochek_s_utkoj_400_g_68696"
+    },
+    "organix": {
+      "images": 15,
+      "url": "https://www.petshop.ru/catalog/cats/food/holistic/dlya-koshek-sukhie-korma/polnoratsionnyy-sukhoy-korm-dlya-sterilizovannykh-koshek-s-krolikom"
+    },
+    "vancat": {
+      "images": 8,
+      "url": "https://www.petshop.ru/catalog/kotyata-i-shchenki/kotyata/dlya-doma/sredstva-gigieny-dlya-kotyat/komkuyushchiysya-napolnitel-s-aromatom-marselskogo-myla-6l-korobka_1"
+    },
+    "florida": {
+      "images": 15,
+      "url": "https://www.petshop.ru/catalog/cats/food/holistic/dlya-koshek-sukhie-korma/sukhoy-korm-dlya-vzroslykh-sterilizovannykh-koshek-s-lososem-i-chernikoy"
+    },
+    "taormina": {
+      "images": 14,
+      "url": "https://www.petshop.ru/catalog/cats/food/holistic/dlya-koshek-sukhie-korma/bezzernovoy-korm-dlya-sterilizovannykh-koshek-so-svezhey-indeykoy-yagodami-i-ovoshchami-southern-for"
+    },
+    "gokitchen": {
+      "images": 15,
+      "url": "https://www.petshop.ru/catalog/dogs/food/holistic/dlya-sobak-sukhie-korma/bezzernovoy_dlya_schenkov_i_sobak_s_indeykoy_dlya_chuvstv_pischevareniya_go_sensitivities_limited_ingredient_grain_free_turkey_recipe_df_1303121_37545"
+    }
+  }
+}

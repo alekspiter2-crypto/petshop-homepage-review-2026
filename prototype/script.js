@@ -18,25 +18,42 @@ function changeCart(delta) {
   });
 }
 
+function galleryFiles(slug, count, jpgIndexes = []) {
+  return Array.from({ length: count }, (_, index) => {
+    const number = index + 1;
+    const extension = jpgIndexes.includes(number) ? 'jpg' : 'png';
+    return `gallery/${slug}/${String(number).padStart(2, '0')}.${extension}`;
+  });
+}
+
+const productGalleries = {
+  savita: galleryFiles('savita', 13, [13]),
+  organix: galleryFiles('organix', 15, [1]),
+  vancat: galleryFiles('vancat', 8),
+  florida: galleryFiles('florida', 15),
+  taormina: galleryFiles('taormina', 14),
+  gokitchen: galleryFiles('gokitchen', 15)
+};
+
 const products = [
-  { image: 'product-renal.png', badge: '−12%', badgeClass: 'orange', price: '1 099 ₽', oldPrice: '1 249 ₽', title: 'Savita Renal сухой корм для здоровья почек', rating: '4,9', reviews: '842 отзыва', delivery: 'Завтра' },
-  { image: 'product-rabbit.jpg', badge: 'Хит', badgeClass: 'pink', price: '519 ₽', oldPrice: '590 ₽', title: 'Savita Sterilised корм с кроликом и овощами', rating: '4,8', reviews: '291 отзыв', delivery: 'Сегодня' },
-  { image: 'product-litter.png', badge: 'Новинка', badgeClass: 'purple', price: '579 ₽', oldPrice: '644 ₽', title: 'Van Cat комкующийся наполнитель без пыли', rating: '4,9', reviews: '1 230 отзывов', delivery: 'Завтра' },
-  { image: 'product-salmon.png', badge: 'Цена дня', badgeClass: 'green', price: '3 959 ₽', oldPrice: '4 399 ₽', title: 'Корм для стерилизованных кошек с лососем', rating: '5,0', reviews: '536 отзывов', delivery: 'Сегодня' },
-  { image: 'product-turkey.png', badge: '−10%', badgeClass: 'orange', price: '2 924 ₽', oldPrice: '3 249 ₽', title: 'Беззерновой корм со свежей индейкой', rating: '4,9', reviews: '702 отзыва', delivery: 'Завтра' },
-  { image: 'product-dog.png', badge: 'Только у нас', badgeClass: 'blue', price: '1 749 ₽', oldPrice: '1 990 ₽', title: 'Полнорационный корм для взрослых собак', rating: '4,8', reviews: '418 отзывов', delivery: 'Сегодня' },
-  { image: 'product-rabbit.jpg', badge: '−18%', badgeClass: 'orange', price: '459 ₽', oldPrice: '559 ₽', title: 'Влажный корм для кошек с нежным кроликом', rating: '4,9', reviews: '615 отзывов', delivery: 'Сегодня' },
-  { image: 'product-litter.png', badge: 'Выбор хозяев', badgeClass: 'pink', price: '899 ₽', oldPrice: '1 050 ₽', title: 'Наполнитель комкующийся с ароматом свежести', rating: '4,8', reviews: '934 отзыва', delivery: 'Завтра' },
-  { image: 'product-dog.png', badge: '−15%', badgeClass: 'green', price: '1 469 ₽', oldPrice: '1 729 ₽', title: 'Сухой корм для собак средних пород', rating: '4,7', reviews: '382 отзыва', delivery: 'Сегодня' },
-  { image: 'product-salmon.png', badge: 'Хит', badgeClass: 'pink', price: '3 499 ₽', oldPrice: '3 990 ₽', title: 'Рацион для кошек с лососем и полезными травами', rating: '5,0', reviews: '1 102 отзыва', delivery: 'Сегодня' },
-  { image: 'product-turkey.png', badge: 'Petshop рекомендует', badgeClass: 'blue', price: '2 699 ₽', oldPrice: '2 999 ₽', title: 'Корм со свежей индейкой для чувствительного пищеварения', rating: '4,9', reviews: '528 отзывов', delivery: 'Завтра' },
-  { image: 'product-renal.png', badge: 'Ветаптека', badgeClass: 'purple', price: '1 249 ₽', oldPrice: '1 399 ₽', title: 'Диетический рацион для поддержания здоровья', rating: '4,8', reviews: '246 отзывов', delivery: 'Сегодня' },
-  { image: 'product-dog.png', badge: '−20%', badgeClass: 'orange', price: '1 399 ₽', oldPrice: '1 749 ₽', title: 'Сбалансированный корм для активных собак', rating: '4,9', reviews: '744 отзыва', delivery: 'Сегодня' },
-  { image: 'product-rabbit.jpg', badge: 'Новинка', badgeClass: 'purple', price: '639 ₽', oldPrice: '710 ₽', title: 'Мясное меню для стерилизованных кошек', rating: '4,7', reviews: '189 отзывов', delivery: 'Завтра' },
-  { image: 'product-litter.png', badge: '−11%', badgeClass: 'orange', price: '729 ₽', oldPrice: '819 ₽', title: 'Натуральный наполнитель с контролем запаха', rating: '4,9', reviews: '815 отзывов', delivery: 'Сегодня' },
-  { image: 'product-salmon.png', badge: 'Цена дня', badgeClass: 'green', price: '3 749 ₽', oldPrice: '4 249 ₽', title: 'Корм с лососем для красивой шерсти', rating: '5,0', reviews: '623 отзыва', delivery: 'Сегодня' },
-  { image: 'product-turkey.png', badge: 'Хит', badgeClass: 'pink', price: '2 849 ₽', oldPrice: '3 199 ₽', title: 'Беззерновой рацион с индейкой и овощами', rating: '4,9', reviews: '911 отзывов', delivery: 'Завтра' },
-  { image: 'product-renal.png', badge: 'Только у нас', badgeClass: 'blue', price: '1 159 ₽', oldPrice: '1 299 ₽', title: 'Специализированный корм Savita Care', rating: '4,8', reviews: '307 отзывов', delivery: 'Сегодня' }
+  { gallery: 'savita', image: 'product-renal.png', badge: '−12%', badgeClass: 'orange', price: '1 099 ₽', oldPrice: '1 249 ₽', title: 'Savita Renal сухой корм для здоровья почек', rating: '4,9', reviews: '842 отзыва', delivery: 'Завтра' },
+  { gallery: 'organix', image: 'product-rabbit.jpg', badge: 'Хит', badgeClass: 'pink', price: '519 ₽', oldPrice: '590 ₽', title: 'Organix Sterilised корм с кроликом, фруктами и овощами', rating: '4,8', reviews: '291 отзыв', delivery: 'Сегодня' },
+  { gallery: 'vancat', image: 'product-litter.png', badge: 'Новинка', badgeClass: 'purple', price: '579 ₽', oldPrice: '644 ₽', title: 'Van Cat Marseille Soap комкующийся наполнитель без пыли', rating: '4,9', reviews: '1 230 отзывов', delivery: 'Завтра' },
+  { gallery: 'florida', image: 'product-salmon.png', badge: 'Цена дня', badgeClass: 'green', price: '3 959 ₽', oldPrice: '4 399 ₽', title: 'Florida Sterilised 34 корм с лососем и черникой', rating: '5,0', reviews: '536 отзывов', delivery: 'Сегодня' },
+  { gallery: 'taormina', image: 'product-turkey.png', badge: '−10%', badgeClass: 'orange', price: '2 924 ₽', oldPrice: '3 249 ₽', title: 'Taormina Southern Forest корм со свежей индейкой', rating: '4,9', reviews: '702 отзыва', delivery: 'Завтра' },
+  { gallery: 'gokitchen', image: 'product-dog.png', badge: 'Только у нас', badgeClass: 'blue', price: '1 749 ₽', oldPrice: '1 990 ₽', title: 'GO’KITCHEN Sensitivities корм с индейкой и овощами', rating: '4,8', reviews: '418 отзывов', delivery: 'Сегодня' },
+  { gallery: 'organix', image: 'product-rabbit.jpg', badge: '−18%', badgeClass: 'orange', price: '459 ₽', oldPrice: '559 ₽', title: 'Organix Sterilised корм с кроликом, фруктами и овощами', rating: '4,9', reviews: '615 отзывов', delivery: 'Сегодня' },
+  { gallery: 'vancat', image: 'product-litter.png', badge: 'Выбор хозяев', badgeClass: 'pink', price: '899 ₽', oldPrice: '1 050 ₽', title: 'Van Cat Marseille Soap комкующийся наполнитель без пыли', rating: '4,8', reviews: '934 отзыва', delivery: 'Завтра' },
+  { gallery: 'gokitchen', image: 'product-dog.png', badge: '−15%', badgeClass: 'green', price: '1 469 ₽', oldPrice: '1 729 ₽', title: 'GO’KITCHEN Sensitivities корм с индейкой и овощами', rating: '4,7', reviews: '382 отзыва', delivery: 'Сегодня' },
+  { gallery: 'florida', image: 'product-salmon.png', badge: 'Хит', badgeClass: 'pink', price: '3 499 ₽', oldPrice: '3 990 ₽', title: 'Florida Sterilised 34 корм с лососем и черникой', rating: '5,0', reviews: '1 102 отзыва', delivery: 'Сегодня' },
+  { gallery: 'taormina', image: 'product-turkey.png', badge: 'Petshop рекомендует', badgeClass: 'blue', price: '2 699 ₽', oldPrice: '2 999 ₽', title: 'Taormina Southern Forest корм со свежей индейкой', rating: '4,9', reviews: '528 отзывов', delivery: 'Завтра' },
+  { gallery: 'savita', image: 'product-renal.png', badge: 'Ветаптека', badgeClass: 'purple', price: '1 249 ₽', oldPrice: '1 399 ₽', title: 'Savita Renal сухой корм для здоровья почек', rating: '4,8', reviews: '246 отзывов', delivery: 'Сегодня' },
+  { gallery: 'gokitchen', image: 'product-dog.png', badge: '−20%', badgeClass: 'orange', price: '1 399 ₽', oldPrice: '1 749 ₽', title: 'GO’KITCHEN Sensitivities корм с индейкой и овощами', rating: '4,9', reviews: '744 отзыва', delivery: 'Сегодня' },
+  { gallery: 'organix', image: 'product-rabbit.jpg', badge: 'Новинка', badgeClass: 'purple', price: '639 ₽', oldPrice: '710 ₽', title: 'Organix Sterilised корм с кроликом, фруктами и овощами', rating: '4,7', reviews: '189 отзывов', delivery: 'Завтра' },
+  { gallery: 'vancat', image: 'product-litter.png', badge: '−11%', badgeClass: 'orange', price: '729 ₽', oldPrice: '819 ₽', title: 'Van Cat Marseille Soap комкующийся наполнитель без пыли', rating: '4,9', reviews: '815 отзывов', delivery: 'Сегодня' },
+  { gallery: 'florida', image: 'product-salmon.png', badge: 'Цена дня', badgeClass: 'green', price: '3 749 ₽', oldPrice: '4 249 ₽', title: 'Florida Sterilised 34 корм с лососем и черникой', rating: '5,0', reviews: '623 отзыва', delivery: 'Сегодня' },
+  { gallery: 'taormina', image: 'product-turkey.png', badge: 'Хит', badgeClass: 'pink', price: '2 849 ₽', oldPrice: '3 199 ₽', title: 'Taormina Southern Forest корм со свежей индейкой', rating: '4,9', reviews: '911 отзывов', delivery: 'Завтра' },
+  { gallery: 'savita', image: 'product-renal.png', badge: 'Только у нас', badgeClass: 'blue', price: '1 159 ₽', oldPrice: '1 299 ₽', title: 'Savita Renal сухой корм для здоровья почек', rating: '4,8', reviews: '307 отзывов', delivery: 'Сегодня' }
 ];
 
 const promos = [
@@ -47,25 +64,27 @@ const promos = [
 ];
 
 function productCard(product) {
+  const images = productGalleries[product.gallery] || [`${product.image}`];
+  const imageMarkup = images.map((image, index) => `
+          <img class="preview-image${index === 0 ? ' is-active' : ''}" src="assets/${image}" alt="${index === 0 ? product.title : ''}" ${index === 0 ? '' : 'loading="lazy" '}decoding="async" data-preview-image="${index}">`).join('');
+  const zoneMarkup = images.map((_, index) => `<span class="preview-zone" data-preview-zone="${index}"></span>`).join('');
+  const dotMarkup = images.map((_, index) => `<i${index === 0 ? ' class="is-active"' : ''} data-preview-dot="${index}"></i>`).join('');
   return `
     <article class="product-card">
       <div class="product-card__visual" data-card-preview>
         <span class="badge badge--${product.badgeClass}">${product.badge}</span>
         <button class="favorite" type="button" aria-label="Добавить в избранное" aria-pressed="false" data-favorite><svg><use href="#i-heart"/></svg></button>
         <div class="preview-images">
-          <img class="preview-image preview-image--1 is-active" src="assets/${product.image}" alt="${product.title}" data-preview-image="0">
-          <img class="preview-image preview-image--2" src="assets/${product.image}" alt="" data-preview-image="1">
-          <img class="preview-image preview-image--3" src="assets/${product.image}" alt="" data-preview-image="2">
+          ${imageMarkup}
         </div>
         <div class="preview-zones" aria-hidden="true">
-          <span class="preview-zone" data-preview-zone="0"></span>
-          <span class="preview-zone" data-preview-zone="1"></span>
-          <span class="preview-zone" data-preview-zone="2"></span>
+          ${zoneMarkup}
         </div>
+        <button class="preview-arrow preview-arrow--prev" type="button" aria-label="Предыдущее фото" data-preview-step="-1">‹</button>
+        <button class="preview-arrow preview-arrow--next" type="button" aria-label="Следующее фото" data-preview-step="1">›</button>
+        <span class="preview-counter" aria-live="polite"><b data-preview-current>1</b> / ${images.length}</span>
         <div class="preview-dots" aria-hidden="true">
-          <i class="is-active" data-preview-dot="0"></i>
-          <i data-preview-dot="1"></i>
-          <i data-preview-dot="2"></i>
+          ${dotMarkup}
         </div>
       </div>
       <div class="price-row"><strong>${product.price}</strong><del>${product.oldPrice}</del></div>
@@ -149,6 +168,15 @@ $$('[data-search-form]').forEach((form) => {
 });
 
 document.addEventListener('click', (event) => {
+  const previewStep = event.target.closest('[data-preview-step]');
+  if (previewStep) {
+    const visual = previewStep.closest('[data-card-preview]');
+    const total = $$('[data-preview-image]', visual).length;
+    const current = Number(visual.dataset.previewIndex || 0);
+    setCardPreview(visual, (current + Number(previewStep.dataset.previewStep) + total) % total);
+    return;
+  }
+
   const previewZone = event.target.closest('[data-preview-zone]');
   if (previewZone) {
     setCardPreview(previewZone.closest('[data-card-preview]'), Number(previewZone.dataset.previewZone));
@@ -168,6 +196,7 @@ document.addEventListener('click', (event) => {
   if (favoriteButton) {
     const active = favoriteButton.classList.toggle('is-active');
     favoriteButton.setAttribute('aria-pressed', String(active));
+    favoriteButton.setAttribute('aria-label', active ? 'Убрать из избранного' : 'Добавить в избранное');
     showToast(active ? 'Добавили в избранное' : 'Убрали из избранного');
     return;
   }
@@ -185,13 +214,34 @@ document.addEventListener('click', (event) => {
 
 function setCardPreview(visual, index) {
   if (!visual) return;
+  visual.dataset.previewIndex = String(index);
   $$('[data-preview-image]', visual).forEach((image) => {
     image.classList.toggle('is-active', Number(image.dataset.previewImage) === index);
   });
   $$('[data-preview-dot]', visual).forEach((dot) => {
     dot.classList.toggle('is-active', Number(dot.dataset.previewDot) === index);
   });
+  const counter = $('[data-preview-current]', visual);
+  if (counter) counter.textContent = String(index + 1);
 }
+
+let previewSwipe;
+document.addEventListener('pointerdown', (event) => {
+  if (event.pointerType === 'mouse') return;
+  const visual = event.target.closest('[data-card-preview]');
+  if (visual) previewSwipe = { visual, x: event.clientX };
+});
+
+document.addEventListener('pointerup', (event) => {
+  if (!previewSwipe || event.pointerType === 'mouse') return;
+  const { visual, x } = previewSwipe;
+  previewSwipe = null;
+  const distance = event.clientX - x;
+  if (Math.abs(distance) < 36) return;
+  const total = $$('[data-preview-image]', visual).length;
+  const current = Number(visual.dataset.previewIndex || 0);
+  setCardPreview(visual, (current + (distance < 0 ? 1 : -1) + total) % total);
+});
 
 document.addEventListener('pointerover', (event) => {
   const zone = event.target.closest('[data-preview-zone]');
