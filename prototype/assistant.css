@@ -30,6 +30,10 @@
   box-shadow: 0 18px 42px rgba(80, 44, 192, .38);
 }
 
+.petshop-assistant-launcher[hidden] {
+  display: none;
+}
+
 .petshop-assistant-launcher:focus-visible,
 .petshop-assistant button:focus-visible,
 .petshop-assistant input:focus-visible,
