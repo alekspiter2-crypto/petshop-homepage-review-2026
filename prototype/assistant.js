@@ -296,6 +296,11 @@
       .map((product) => product.id);
   }
 
+  function lastRecommendedProducts() {
+    const previous = [...state.messages].reverse().find((message) => message.role === 'assistant' && message.products?.length);
+    return (previous?.products || []).map((id) => productById[id]).filter(Boolean);
+  }
+
   function replyFor(rawText) {
     const text = normalize(rawText);
     const detectedPet = detectPet(text);
@@ -337,6 +342,37 @@
         products: [],
         quick: ['Найти товары для ухода', 'Подобрать обычный корм']
       };
+    }
+
+    if (/(спасибо|благодарю|понятно|отлично)/.test(text)) {
+      return {
+        text: 'Пожалуйста! Могу ещё сравнить показанные варианты, выбрать самый выгодный или собрать к корму небольшой комплект.',
+        products: [],
+        quick: ['Какой выбрать?', 'Показать самый недорогой', 'Собрать набор к корму']
+      };
+    }
+
+    if (/(какой выбрать|что лучше|посоветуй один|выбери один)/.test(text)) {
+      const [best] = lastRecommendedProducts();
+      if (best) {
+        const distinction = best.note ? best.note.toLowerCase() : 'высокий рейтинг и хорошее соотношение цены и качества';
+        return {
+          text: `Если нужен один вариант, я бы начал с «${best.title}». У него рейтинг ${best.rating}, а главное отличие — ${distinction}.`,
+          products: [best.id],
+          quick: ['Показать самый недорогой', 'Собрать набор к корму']
+        };
+      }
+    }
+
+    if (/(подешевле|самый недорог|самый дешев)/.test(text)) {
+      const cheapest = lastRecommendedProducts().sort((a, b) => a.price - b.price)[0];
+      if (cheapest) {
+        return {
+          text: `Самый доступный из показанных — «${cheapest.title}» за ${rubles(cheapest.price)}. Небольшая упаковка удобна, чтобы сначала проверить, подойдёт ли корм питомцу.`,
+          products: [cheapest.id],
+          quick: ['Показать корм ещё раз', 'Собрать набор к корму']
+        };
+      }
     }
 
     const wantsLitter = /(наполнител|лоток|совок|туалет)/.test(text);
