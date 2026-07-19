@@ -1,16 +1,30 @@
 (() => {
-  const STORAGE_KEY = 'petshop-assistant-prototype-v1';
+  const STORAGE_KEY = 'petshop-assistant-prototype-v2';
   const MAX_MESSAGES = 14;
 
   const catalog = [
-    { id: 'royal-canin-sterilised', title: 'Royal Canin Sterilised 37 для стерилизованных кошек, 4 кг', pet: 'cat', category: 'dry_food', price: 5268, rating: '5,0', reviews: 557, image: 'gallery-royal-01.jpg', tags: 'кошка кот стерилизован сухой корм контроль веса royal canin' },
-    { id: 'savita-rabbit', title: 'Savita Sterilised корм с кроликом и овощами, 400 г', pet: 'cat', category: 'dry_food', price: 519, rating: '4,8', reviews: 291, image: 'product-rabbit.jpg', tags: 'кошка кот стерилизован сухой корм кролик недорогой' },
-    { id: 'savita-salmon', title: 'Сухой корм для стерилизованных кошек с лососем, 3 кг', pet: 'cat', category: 'dry_food', price: 3959, rating: '5,0', reviews: 536, image: 'product-salmon.png', tags: 'кошка стерилизован сухой корм лосось шерсть кожа' },
-    { id: 'adult-dog-food', title: 'Полнорационный сухой корм для взрослых собак, 3 кг', pet: 'dog', category: 'dry_food', price: 1749, rating: '4,8', reviews: 418, image: 'product-dog.png', tags: 'собака пес взрослый сухой корм ежедневный рацион' },
+    { id: 'royal-canin-sterilised', title: 'Royal Canin Sterilised 37 для стерилизованных кошек, 4 кг', pet: 'cat', category: 'dry_food', age: 'adult', sterilized: true, price: 5268, rating: '5,0', reviews: 557, image: 'gallery-royal-01.jpg', note: 'Премиальный рацион · контроль веса', tags: 'кошка кот стерилизован сухой корм контроль веса royal canin' },
+    { id: 'organix-rabbit-small', title: 'Organix Sterilised с кроликом, 400 г', pet: 'cat', category: 'dry_food', age: 'adult', sterilized: true, price: 519, rating: '4,8', reviews: 291, image: 'product-rabbit.jpg', note: 'Небольшая упаковка · можно попробовать', tags: 'кошка кот стерилизован сухой корм кролик недорогой' },
+    { id: 'savita-turkey', title: 'Savita Sterilised со свежей индейкой, 1,5 кг', pet: 'cat', category: 'dry_food', age: 'adult', sterilized: true, price: 1290, rating: '4,9', reviews: 684, image: 'product-turkey.png', note: 'Выгодный ежедневный рацион', tags: 'кошка кот стерилизован сухой корм индейка контроль веса' },
+    { id: 'florida-salmon', title: 'Florida Sterilised с лососем и черникой, 1,5 кг', pet: 'cat', category: 'dry_food', age: 'adult', sterilized: true, price: 1690, rating: '5,0', reviews: 536, image: 'product-salmon.png', note: 'Лосось · поддержка кожи и шерсти', tags: 'кошка стерилизован сухой корм лосось шерсть кожа' },
+    { id: 'gokitchen-sensitive-cat', title: 'GO’KITCHEN Sensitive с индейкой, 1,5 кг', pet: 'cat', category: 'dry_food', age: 'adult', sterilized: null, sensitive: true, price: 1890, rating: '4,8', reviews: 418, image: 'product-dog.png', note: 'Для чувствительного пищеварения', tags: 'кошка сухой корм индейка чувствительное пищеварение' },
+    { id: 'taormina-grainfree-cat', title: 'Taormina беззерновой корм с индейкой, 3 кг', pet: 'cat', category: 'dry_food', age: 'adult', sterilized: null, sensitive: true, price: 2924, rating: '4,9', reviews: 702, image: 'product-turkey.png', note: 'Беззерновой состав · большая упаковка', tags: 'кошка сухой корм индейка беззерновой чувствительный' },
+    { id: 'savita-kitten', title: 'Savita Kitten с курицей для котят, 700 г', pet: 'cat', category: 'dry_food', age: 'young', sterilized: false, price: 749, rating: '4,9', reviews: 438, image: 'product-rabbit.jpg', note: 'Для роста котят до 12 месяцев', tags: 'кошка котенок сухой корм курица рост' },
+    { id: 'savita-senior-cat', title: 'Savita Senior для кошек старше 7 лет, 1,5 кг', pet: 'cat', category: 'dry_food', age: 'senior', sterilized: null, price: 1590, rating: '4,9', reviews: 367, image: 'product-renal.png', note: 'Для кошек старше 7 лет', tags: 'кошка пожилая старше 7 лет сухой корм' },
+    { id: 'adult-dog-food', title: 'GO’KITCHEN корм для взрослых собак, 3 кг', pet: 'dog', category: 'dry_food', age: 'adult', sterilized: null, price: 1749, rating: '4,8', reviews: 418, image: 'product-dog.png', note: 'Повседневный сбалансированный рацион', tags: 'собака пес взрослый сухой корм ежедневный рацион' },
+    { id: 'florida-small-dog', title: 'Florida для взрослых собак малых пород, 1 кг', pet: 'dog', category: 'dry_food', age: 'adult', sterilized: null, price: 999, rating: '4,9', reviews: 395, image: 'product-salmon.png', note: 'Мелкие гранулы · для малых пород', tags: 'собака малая порода взрослый сухой корм' },
+    { id: 'organix-adult-dog', title: 'Organix Adult с индейкой для собак, 2 кг', pet: 'dog', category: 'dry_food', age: 'adult', sterilized: null, price: 1490, rating: '4,8', reviews: 447, image: 'product-rabbit.jpg', note: 'Индейка · средняя упаковка', tags: 'собака взрослый сухой корм индейка' },
+    { id: 'sensitive-dog-food', title: 'Savita Sensitive с ягнёнком для собак, 1,5 кг', pet: 'dog', category: 'dry_food', age: 'adult', sterilized: null, sensitive: true, price: 1399, rating: '4,9', reviews: 512, image: 'product-turkey.png', note: 'Ягнёнок · чувствительное пищеварение', tags: 'собака сухой корм ягненок чувствительное пищеварение' },
+    { id: 'puppy-dog-food', title: 'Organix Puppy с курицей для щенков, 1 кг', pet: 'dog', category: 'dry_food', age: 'young', sterilized: null, price: 899, rating: '4,8', reviews: 326, image: 'product-dog.png', note: 'Для щенков до 12 месяцев', tags: 'собака щенок сухой корм курица рост' },
+    { id: 'senior-dog-food', title: 'Savita Senior для собак старше 7 лет, 2 кг', pet: 'dog', category: 'dry_food', age: 'senior', sterilized: null, price: 1650, rating: '4,9', reviews: 284, image: 'product-renal.png', note: 'Для собак старше 7 лет', tags: 'собака пожилая старше 7 лет сухой корм' },
+    { id: 'large-dog-food', title: 'Taormina для собак средних и крупных пород, 5 кг', pet: 'dog', category: 'dry_food', age: 'adult', sterilized: null, price: 2949, rating: '4,8', reviews: 604, image: 'product-dog.png', note: 'Большая упаковка · выгодная цена за кг', tags: 'собака средняя крупная порода сухой корм' },
     { id: 'van-cat-litter', title: 'Van Cat комкующийся наполнитель без пыли, 5 кг', pet: 'cat', category: 'litter', price: 579, rating: '4,9', reviews: 1230, image: 'product-litter.png', tags: 'кошка кот наполнитель комкующийся без пыли запах' },
     { id: 'ceramic-bowl', title: 'Керамическая миска с нескользящим дном', pet: 'any', category: 'bowl', price: 459, rating: '4,9', reviews: 642, image: 'product-rabbit.jpg', tags: 'миска керамика кормление нескользящий' },
     { id: 'feeding-mat', title: 'Коврик под миски с защитой от воды', pet: 'any', category: 'mat', price: 329, rating: '4,8', reviews: 381, image: 'product-turkey.png', tags: 'коврик миска кормление защита пола вода' },
-    { id: 'wet-salmon-pouch', title: 'Влажный корм с лососем, пауч 85 г', pet: 'cat', category: 'wet_food', price: 89, rating: '5,0', reviews: 1102, image: 'product-salmon.png', tags: 'кошка кот влажный корм пауч лосось' },
+    { id: 'wet-salmon-pouch', title: 'Florida влажный корм с лососем, пауч 85 г', pet: 'cat', category: 'wet_food', age: 'adult', sterilized: null, price: 89, rating: '5,0', reviews: 1102, image: 'product-salmon.png', note: 'Лосось · пауч на одну порцию', tags: 'кошка кот влажный корм пауч лосось' },
+    { id: 'wet-rabbit-pouch', title: 'Organix влажный корм с кроликом, 85 г', pet: 'cat', category: 'wet_food', age: 'adult', sterilized: null, price: 79, rating: '4,9', reviews: 845, image: 'product-rabbit.jpg', note: 'Нежный кролик · без искусственных красителей', tags: 'кошка кот влажный корм пауч кролик' },
+    { id: 'wet-kitten-pouch', title: 'Savita влажный корм для котят с курицей, 85 г', pet: 'cat', category: 'wet_food', age: 'young', sterilized: false, price: 85, rating: '4,9', reviews: 392, image: 'product-turkey.png', note: 'Мягкая текстура для котят', tags: 'кошка котенок влажный корм пауч курица' },
+    { id: 'wet-dog-lamb', title: 'Savita влажный корм для собак с ягнёнком, 100 г', pet: 'dog', category: 'wet_food', age: 'adult', sterilized: null, price: 99, rating: '4,9', reviews: 476, image: 'product-dog.png', note: 'Ягнёнок · порционная упаковка', tags: 'собака влажный корм ягненок пауч' },
     { id: 'catnip-ball', title: 'Мячик с кошачьей мятой для активной игры', pet: 'cat', category: 'toy', price: 299, rating: '4,9', reviews: 740, image: 'product-turkey.png', tags: 'кошка кот игрушка мяч кошачья мята активность' },
     { id: 'high-cat-tray', title: 'Высокий лоток с защитным бортиком', pet: 'cat', category: 'tray', price: 899, rating: '4,9', reviews: 865, image: 'product-litter.png', tags: 'кошка кот лоток туалет высокий борт наполнитель' },
     { id: 'litter-scoop', title: 'Совок для наполнителя с крупной сеткой', pet: 'cat', category: 'scoop', price: 189, rating: '4,8', reviews: 512, image: 'product-litter.png', tags: 'кошка совок лоток наполнитель уборка' },
@@ -29,13 +43,24 @@
         return {
           messages: saved.messages.slice(-MAX_MESSAGES),
           pet: saved.pet === 'dog' ? 'dog' : saved.pet === 'cat' ? 'cat' : null,
-          lastIntent: saved.lastIntent || null
+          lastIntent: saved.lastIntent || null,
+          age: ['young', 'adult', 'senior'].includes(saved.age) ? saved.age : null,
+          sterilized: typeof saved.sterilized === 'boolean' ? saved.sterilized : null,
+          sensitive: Boolean(saved.sensitive),
+          budget: Number.isFinite(saved.budget) ? saved.budget : null,
+          noBudget: Boolean(saved.noBudget),
+          profileComplete: Boolean(saved.profileComplete),
+          pendingQuestion: saved.pendingQuestion || null
         };
       }
     } catch (_) {
       // A blocked or malformed localStorage must not break the prototype.
     }
-    return { messages: [], pet: null, lastIntent: null };
+    return {
+      messages: [], pet: null, lastIntent: null, age: null, sterilized: null,
+      sensitive: false, budget: null, noBudget: false, profileComplete: false,
+      pendingQuestion: null
+    };
   }
 
   function saveState() {
@@ -151,6 +176,13 @@
       }];
       state.pet = null;
       state.lastIntent = null;
+      state.age = null;
+      state.sterilized = null;
+      state.sensitive = false;
+      state.budget = null;
+      state.noBudget = false;
+      state.profileComplete = false;
+      state.pendingQuestion = null;
       saveState();
       render(messages);
       input.focus();
@@ -212,12 +244,54 @@
     return Number.isFinite(value) && value > 0 ? value : null;
   }
 
-  function topProducts({ pet, categories, budget, limit = 4 }) {
+  function detectAge(text) {
+    if (/(котен|щен|до года|малыш)/.test(text)) return 'young';
+    if (/(старше 7|пожил|возрастн|стареньк|сеньор)/.test(text)) return 'senior';
+    if (/(взросл|от года|обычный рацион)/.test(text)) return 'adult';
+    return null;
+  }
+
+  function detectSterilized(text) {
+    if (/(не стерилиз|не кастрир)/.test(text)) return false;
+    if (/(стерилиз|кастрир)/.test(text)) return true;
+    return null;
+  }
+
+  function profileDescription(pet) {
+    let petLabel = pet === 'dog' ? 'собака' : 'кошка';
+    if (state.age === 'young') petLabel = pet === 'dog' ? 'щенок' : 'котёнок';
+    if (state.age === 'adult') petLabel = pet === 'dog' ? 'взрослая собака' : 'взрослая кошка';
+    if (state.age === 'senior') petLabel = pet === 'dog' ? 'собака старше 7 лет' : 'кошка старше 7 лет';
+    if (pet === 'cat' && state.sterilized === true && state.age !== 'young') petLabel = `${petLabel}, стерилизована`;
+    if (pet === 'cat' && state.sterilized === false && state.age !== 'young') petLabel = `${petLabel}, не стерилизована`;
+    const details = [petLabel];
+    if (state.sensitive) details.push('чувствительное пищеварение');
+    if (state.budget) details.push(`до ${rubles(state.budget)}`);
+    return details.join(', ');
+  }
+
+  function productScore(product, { age, sterilized, sensitive }) {
+    let score = Number(product.rating.replace(',', '.'));
+    if (age) {
+      if (product.age === age) score += 5;
+      else if (!product.age) score += 1;
+      else score -= 5;
+    }
+    if (typeof sterilized === 'boolean') {
+      if (product.sterilized === sterilized) score += 4;
+      else if (product.sterilized == null) score += 1;
+      else score -= 4;
+    }
+    if (sensitive && product.sensitive) score += 3;
+    return score;
+  }
+
+  function topProducts({ pet, categories, budget, age, sterilized, sensitive, limit = 4 }) {
     return catalog
       .filter((product) => !pet || product.pet === pet || product.pet === 'any')
       .filter((product) => !categories?.length || categories.includes(product.category))
       .filter((product) => !budget || product.price <= budget)
-      .sort((a, b) => Number(b.rating.replace(',', '.')) - Number(a.rating.replace(',', '.')) || a.price - b.price)
+      .sort((a, b) => productScore(b, { age, sterilized, sensitive }) - productScore(a, { age, sterilized, sensitive }) || a.price - b.price)
       .slice(0, limit)
       .map((product) => product.id);
   }
@@ -225,9 +299,33 @@
   function replyFor(rawText) {
     const text = normalize(rawText);
     const detectedPet = detectPet(text);
+    if (detectedPet && state.pet && detectedPet !== state.pet) {
+      state.age = null;
+      state.sterilized = null;
+      state.sensitive = false;
+      state.budget = null;
+      state.noBudget = false;
+      state.profileComplete = false;
+      state.pendingQuestion = null;
+    }
     if (detectedPet) state.pet = detectedPet;
     const pet = detectedPet || state.pet;
-    const budget = detectBudget(text);
+    const detectedAge = detectAge(text);
+    const detectedSterilized = detectSterilized(text);
+    const detectedBudget = detectBudget(text);
+    if (detectedAge) state.age = detectedAge;
+    if (typeof detectedSterilized === 'boolean') state.sterilized = detectedSterilized;
+    if (detectedBudget) {
+      state.budget = detectedBudget;
+      state.noBudget = false;
+    }
+    if (/(бюджет не важен|без ограничений|цена не важна)/.test(text)) {
+      state.budget = null;
+      state.noBudget = true;
+    }
+    if (/(чувствительн|аллерги|пищеварен|беззернов)/.test(text)) state.sensitive = true;
+    const budget = detectedBudget || state.budget;
+    const skipQuestions = /(без уточн|показать сразу|неважно|не важно)/.test(text);
 
     if (/(привет|здравств|добрый день|добрый вечер)/.test(text)) {
       return { text: 'Здравствуйте! Что подбираем и для какого питомца?', products: [], quick: defaultQuick };
@@ -249,7 +347,8 @@
 
     if ((wantsFood || wantsWet) && !pet) {
       state.lastIntent = wantsBundle ? 'food_bundle' : wantsWet ? 'wet_food' : 'dry_food';
-      return { text: 'Уточните, пожалуйста: корм нужен кошке или собаке?', products: [], quick: ['Для кошки', 'Для собаки'] };
+      state.pendingQuestion = 'pet';
+      return { text: 'Конечно, помогу. Сначала уточню: корм выбираем кошке или собаке?', products: [], quick: ['Для кошки', 'Для собаки'] };
     }
 
     if (wantsLitter || (wantsBundle && state.lastIntent === 'litter')) {
@@ -292,7 +391,42 @@
     if (wantsFood || wantsWet || state.lastIntent === 'dry_food' || state.lastIntent === 'wet_food') {
       const category = wantsWet || state.lastIntent === 'wet_food' ? 'wet_food' : 'dry_food';
       state.lastIntent = category;
-      const products = topProducts({ pet, categories: [category], budget });
+
+      if (!state.profileComplete && !skipQuestions && !state.age) {
+        state.pendingQuestion = 'age';
+        return pet === 'cat'
+          ? {
+              text: 'Хорошо. Уточню один момент, чтобы не показывать случайный корм: кошка взрослая, котёнок или старше 7 лет? Она стерилизована?',
+              products: [],
+              quick: ['Взрослая, стерилизована', 'Взрослая, не стерилизована', 'Котёнок', 'Старше 7 лет', 'Показать без уточнений']
+            }
+          : {
+              text: 'Расскажите немного о питомце: это взрослая собака, щенок или собака старше 7 лет?',
+              products: [],
+              quick: ['Взрослая собака', 'Щенок', 'Старше 7 лет', 'Показать без уточнений']
+            };
+      }
+
+      if (!state.profileComplete && !skipQuestions && !state.budget && !state.noBudget) {
+        state.pendingQuestion = 'budget';
+        return {
+          text: `Понял: ${profileDescription(pet)}. И последний вопрос — какой бюджет на одну упаковку?`,
+          products: [],
+          quick: ['До 1 000 ₽', 'До 1 500 ₽', 'До 2 000 ₽', 'До 3 000 ₽', 'Бюджет не важен']
+        };
+      }
+
+      state.profileComplete = true;
+      state.pendingQuestion = null;
+      const products = topProducts({
+        pet,
+        categories: [category],
+        budget,
+        age: state.age,
+        sterilized: state.sterilized,
+        sensitive: state.sensitive,
+        limit: 4
+      });
       if (!products.length) {
         return {
           text: `В демонстрационном каталоге подходящего варианта${budget ? ` до ${rubles(budget)}` : ''} пока нет. Попробуйте увеличить бюджет или выбрать другую категорию.`,
@@ -302,14 +436,16 @@
       }
       const petName = pet === 'dog' ? 'собаки' : 'кошки';
       return {
-        text: `Подобрал ${products.length === 1 ? 'лучший вариант' : 'варианты'} для ${petName}${budget ? ` в бюджете до ${rubles(budget)}` : ''}. Смотрите рейтинг и размер упаковки.`,
+        text: products.length === 1
+          ? `Понял: ${profileDescription(pet)}. Пока нашёл один точный вариант для ${petName}. Можно изменить бюджет или параметры — тогда выбор станет шире.`
+          : `Понял: ${profileDescription(pet)}. Нашёл ${products.length} разных варианта: от доступной небольшой упаковки до более специализированного рациона. Ниже видно, чем они отличаются.`,
         products,
         quick: pet === 'cat' ? ['Собрать набор к корму', 'Показать наполнитель'] : ['Показать товары для кошки']
       };
     }
 
     if (pet) {
-      const products = topProducts({ pet, budget, limit: 4 });
+      const products = topProducts({ pet, budget, age: state.age, sterilized: state.sterilized, sensitive: state.sensitive, limit: 4 });
       return {
         text: `Вот популярные товары для ${pet === 'dog' ? 'собаки' : 'кошки'}${budget ? ` до ${rubles(budget)}` : ''}. Что хотите уточнить: корм, уход или аксессуары?`,
         products,
@@ -345,6 +481,7 @@
           <a href="catalog.html?product=${encodeURIComponent(product.id)}" aria-label="Посмотреть ${escapeHtml(product.title)}"><img class="petshop-assistant-product__image" src="assets/${encodeURIComponent(product.image)}" alt=""></a>
           <a class="petshop-assistant-product__title" href="catalog.html?product=${encodeURIComponent(product.id)}">${escapeHtml(product.title)}</a>
           <div class="petshop-assistant-product__meta"><b>★ ${product.rating}</b><span>${reviewLabel(product.reviews)}</span></div>
+          ${product.note ? `<div class="petshop-assistant-product__hint">${escapeHtml(product.note)}</div>` : ''}
           <div class="petshop-assistant-product__bottom"><span class="petshop-assistant-product__price">${rubles(product.price)}</span><button class="petshop-assistant-product__add" type="button" data-pa-add="${escapeHtml(product.id)}">В корзину</button></div>
         </article>`;
     }).join('')}</div>`;
