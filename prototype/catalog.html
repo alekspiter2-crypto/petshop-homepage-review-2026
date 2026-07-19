@@ -44,9 +44,9 @@
       </form>
 
       <nav class="account-nav" aria-label="Личный кабинет">
-        <a href="#" data-toast="Вход в личный кабинет"><svg><use href="#i-user"/></svg><span>Войти</span></a>
-        <a href="#" data-toast="Открываем заказы"><svg><use href="#i-box"/></svg><span>Заказы</span></a>
-        <a href="#" data-toast="Открываем избранное"><svg><use href="#i-heart"/></svg><span>Избранное</span></a>
+        <a href="#" data-toast="Вход доступен в полной версии магазина"><svg><use href="#i-user"/></svg><span>Войти</span></a>
+        <a href="#" data-toast="История заказов доступна в полной версии магазина"><svg><use href="#i-box"/></svg><span>Заказы</span></a>
+        <a href="#" data-toast="Раздел избранного готовится"><svg><use href="#i-heart"/></svg><span>Избранное</span></a>
         <a href="cart.html" class="cart-link"><svg><use href="#i-cart"/></svg><span>Корзина</span><b data-cart-count>2</b></a>
       </nav>
       <a class="mobile-cart" href="cart.html" aria-label="Корзина"><svg><use href="#i-cart"/></svg><b data-cart-count>2</b></a>
@@ -66,7 +66,7 @@
       <a href="catalog.html#vet">Ветаптека</a>
       <a href="catalog.html#young">Котята и щенки</a>
       <a href="catalog.html#other-pets">Другие питомцы</a>
-      <a href="#" data-toast="Открываем список брендов">Бренды</a>
+      <a href="#" data-toast="Раздел брендов готовится">Бренды</a>
       <a href="index.html#auto">Автозаказ</a>
       <span><svg><use href="#i-pin"/></svg> Сегодня с 18:00</span>
     </nav>
@@ -88,22 +88,22 @@
     <a href="index.html"><svg><use href="#i-home"/></svg><span>Главная</span></a>
     <a class="is-active" href="catalog.html"><svg><use href="#i-grid"/></svg><span>Каталог</span></a>
     <a href="#" data-focus-search><svg><use href="#i-search"/></svg><span>Поиск</span></a>
-    <a href="#" data-toast="Открываем заказы"><svg><use href="#i-box"/></svg><span>Заказы</span></a>
+    <a href="#" data-toast="История заказов доступна в полной версии магазина"><svg><use href="#i-box"/></svg><span>Заказы</span></a>
     <a href="cart.html"><svg><use href="#i-cart"/></svg><span>Корзина</span><b data-cart-count>2</b></a>
   </nav>
 
   <aside class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Мобильное меню" aria-hidden="true" data-mobile-drawer>
     <div class="mobile-drawer__panel">
       <div class="mobile-drawer__head"><a class="logo" href="index.html"><img src="assets/petshop-logo.svg" alt="Petshop.ru"></a><button class="icon-button" type="button" aria-label="Закрыть меню" data-menu-close><svg><use href="#i-close"/></svg></button></div>
-      <nav><a href="catalog.html">Каталог</a><a href="catalog.html?page=cats">Кошки</a><a href="catalog.html?page=dogs">Собаки</a><a href="catalog.html#vet">Ветаптека</a><a href="index.html#auto">Автозаказ</a><a href="#" data-toast="Открываем магазины">Магазины</a></nav>
+      <nav><a href="catalog.html">Каталог</a><a href="catalog.html?page=cats">Кошки</a><a href="catalog.html?page=dogs">Собаки</a><a href="catalog.html#vet">Ветаптека</a><a href="index.html#auto">Автозаказ</a><a href="#" data-toast="Карта магазинов готовится">Магазины</a></nav>
       <div class="drawer-delivery"><svg><use href="#i-pin"/></svg><span><b>Доставим сегодня</b><small>Санкт-Петербург</small></span></div>
     </div>
   </aside>
 
   <div class="toast" role="status" aria-live="polite" data-toast-box></div>
-  <script src="cart-store.js"></script>
-  <script src="script.js"></script>
-  <script src="catalog.js"></script>
+  <script src="cart-store.js?v=3"></script>
+  <script src="script.js?v=3"></script>
+  <script src="catalog.js?v=3"></script>
   <script src="assistant.js?v=20"></script>
 </body>
 </html>

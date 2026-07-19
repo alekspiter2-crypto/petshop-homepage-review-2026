@@ -92,7 +92,7 @@ function renderCatalog() {
       <div class="catalog-heading"><div><h2>Для кого выбираем?</h2><p>Основные разделы каталога Petshop</p></div><span>${catalogEntries.length} разделов</span></div>
       <div class="catalog-entry-grid">
         ${catalogEntries.map((entry) => `
-          <a class="catalog-entry catalog-entry--${entry.tone}" ${entry.id ? `id="${entry.id}"` : ''} href="${entry.href || '#'}" ${entry.href ? '' : `data-toast="Открываем раздел «${entry.title}»"`}>
+          <a class="catalog-entry catalog-entry--${entry.tone}" ${entry.id ? `id="${entry.id}"` : ''} href="${entry.href || '#'}" ${entry.href ? '' : `data-toast="Раздел «${entry.title}» готовится"`}>
             <span class="catalog-entry__icon">${entry.emoji}</span>
             <span class="catalog-entry__copy"><b>${entry.title}</b><small>${entry.description}</small></span>
             <span class="catalog-entry__arrow"><svg><use href="#i-chevron"/></svg></span>
@@ -116,9 +116,9 @@ function groupCard(group) {
         <h2>${group.title}</h2>
       </div>
       <nav aria-label="${group.title}">
-        ${group.items.map((item) => `<a href="#" data-toast="Открываем «${item}»"><span>${item}</span><svg><use href="#i-chevron"/></svg></a>`).join('')}
+        ${group.items.map((item) => `<a href="#" data-toast="Раздел «${item}» готовится"><span>${item}</span><svg><use href="#i-chevron"/></svg></a>`).join('')}
       </nav>
-      <a class="category-group__all" href="#" data-toast="Открываем все товары раздела «${group.title}»">Смотреть всё <svg><use href="#i-chevron"/></svg></a>
+      <a class="category-group__all" href="#" data-toast="Полный раздел «${group.title}» готовится">Смотреть всё <svg><use href="#i-chevron"/></svg></a>
     </article>
   `;
 }
@@ -140,7 +140,7 @@ function renderPetPage(pageKey) {
       ${pageTabs(pageKey)}
       <div class="popular-row" aria-label="Популярные категории">
         <b>Популярное</b>
-        <div>${page.popular.map((item) => `<a href="#" data-toast="Открываем «${item}»">${item}</a>`).join('')}</div>
+        <div>${page.popular.map((item) => `<a href="#" data-toast="Раздел «${item}» готовится">${item}</a>`).join('')}</div>
       </div>
       <div class="catalog-heading"><div><h2>Выберите раздел</h2><p>Все категории для ${pageKey === 'cats' ? 'кошек' : 'собак'}</p></div><span>${page.groups.length} разделов</span></div>
       <div class="category-group-grid">${page.groups.map(groupCard).join('')}</div>
