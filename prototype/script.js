@@ -379,6 +379,7 @@ $$('[data-product-filter]').forEach((button) => {
 const drawer = $('[data-mobile-drawer]');
 const menuButton = $('[data-menu-open]');
 const drawerPageRoots = $$('.topbar, .site-header, main, .footer, .mobile-bottom-nav');
+const drawerRootAriaHidden = new Map(drawerPageRoots.map((element) => [element, element.getAttribute('aria-hidden')]));
 let focusBeforeDrawer;
 
 function setDrawer(open) {
@@ -388,8 +389,23 @@ function setDrawer(open) {
   drawer?.setAttribute('aria-hidden', String(!open));
   menuButton?.setAttribute('aria-expanded', String(open));
   document.body.classList.toggle('drawer-open', open);
-  drawerPageRoots.forEach((element) => { element.inert = open; });
-  if (open) $('[data-menu-close]', drawer)?.focus({ preventScroll: true });
+  drawerPageRoots.forEach((element) => {
+    element.inert = open;
+    if (open) element.setAttribute('aria-hidden', 'true');
+    else {
+      const previous = drawerRootAriaHidden.get(element);
+      if (previous === null) element.removeAttribute('aria-hidden');
+      else element.setAttribute('aria-hidden', previous);
+    }
+  });
+  if (open) {
+    const closeButton = $('[data-menu-close]', drawer);
+    closeButton?.focus({ preventScroll: true });
+    requestAnimationFrame(() => closeButton?.focus({ preventScroll: true }));
+    setTimeout(() => {
+      if (drawer.classList.contains('is-open')) closeButton?.focus({ preventScroll: true });
+    }, 260);
+  }
   else if (focusBeforeDrawer instanceof HTMLElement) focusBeforeDrawer.focus();
 }
 
