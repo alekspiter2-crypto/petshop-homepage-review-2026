@@ -297,7 +297,8 @@
   }
 
   function lastRecommendedProducts() {
-    const previous = [...state.messages].reverse().find((message) => message.role === 'assistant' && message.products?.length);
+    const recommendations = [...state.messages].reverse().filter((message) => message.role === 'assistant' && message.products?.length);
+    const previous = recommendations.find((message) => message.products.length > 1) || recommendations[0];
     return (previous?.products || []).map((id) => productById[id]).filter(Boolean);
   }
 
@@ -367,8 +368,9 @@
     if (/(подешевле|самый недорог|самый дешев)/.test(text)) {
       const cheapest = lastRecommendedProducts().sort((a, b) => a.price - b.price)[0];
       if (cheapest) {
+        const distinction = cheapest.note ? cheapest.note.toLowerCase() : 'хорошее соотношение цены и качества';
         return {
-          text: `Самый доступный из показанных — «${cheapest.title}» за ${rubles(cheapest.price)}. Небольшая упаковка удобна, чтобы сначала проверить, подойдёт ли корм питомцу.`,
+          text: `Самый доступный из показанных — «${cheapest.title}» за ${rubles(cheapest.price)}. Его главное отличие — ${distinction}.`,
           products: [cheapest.id],
           quick: ['Показать корм ещё раз', 'Собрать набор к корму']
         };
