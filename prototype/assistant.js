@@ -256,12 +256,13 @@
       state.pet = 'cat';
       state.lastIntent = 'litter';
       const base = topProducts({ pet: 'cat', categories: ['litter'], budget, limit: 1 });
-      const additions = topProducts({ pet: 'cat', categories: ['tray', 'scoop', 'litter_mat', 'toy'], limit: 4 });
-      const products = wantsBundle ? additions : [...base, ...additions.slice(0, 3)];
+      const bundleOrder = ['high-cat-tray', 'litter-scoop', 'catnip-ball'];
+      const additions = bundleOrder.filter((id) => !budget || productById[id].price <= budget);
+      const products = [...base, ...additions];
       return {
         text: budget && !base.length
           ? `В демонстрационном каталоге нет наполнителя до ${rubles(budget)}. Покажу полезные дополнения к лотку.`
-          : 'Собрал удобный комплект: наполнитель, высокий лоток, совок и коврик для чистоты вокруг туалета.',
+          : 'Собрал удобный комплект: наполнитель, высокий лоток, совок и игрушку для кошки.',
         products,
         quick: ['Только наполнитель', 'Показать игрушку кошке']
       };
