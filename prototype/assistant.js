@@ -259,7 +259,7 @@
 
   function detectPet(text) {
     if (/(хорек|хорьк)/.test(text)) return 'ferret';
-    if (/(грызун|хомяк|хомяч|крыс|морск\w* свин|шиншилл|дегу|кролик|мышк)/.test(text)) return 'rodent';
+    if (/(грызун|хомяк|хомяч|крыс|морск[а-я]* свин|шиншилл|дегу|кролик|мышк)/.test(text)) return 'rodent';
     if (/(птиц|попуг|корелл|канар|амадин|какаду|неразлуч)/.test(text)) return 'bird';
     if (/(рыб|аквариум|цихлид)/.test(text)) return 'fish';
     if (/(собак|собач|пес|псу|щен|дог)/.test(text)) return 'dog';
@@ -269,15 +269,15 @@
 
   function detectPetDetail(text) {
     if (/(хомяк|хомяч)/.test(text)) return 'hamster';
-    if (/(морск\w* свин)/.test(text)) return 'guinea_pig';
+    if (/(морск[а-я]* свин)/.test(text)) return 'guinea_pig';
     if (/(шиншилл)/.test(text)) return 'chinchilla';
     if (/(крыс)/.test(text)) return 'rat';
     if (/(волнист)/.test(text)) return 'budgie';
     if (/(канар)/.test(text)) return 'canary';
     if (/(попуг|корелл|какаду|неразлуч)/.test(text)) return 'parrot';
-    if (/(золот\w* рыб)/.test(text)) return 'goldfish';
+    if (/(золот[а-я]* рыб)/.test(text)) return 'goldfish';
     if (/(цихлид)/.test(text)) return 'cichlid';
-    if (/(тропическ\w* рыб)/.test(text)) return 'tropical_fish';
+    if (/(тропическ[а-я]* рыб)/.test(text)) return 'tropical_fish';
     return null;
   }
 
