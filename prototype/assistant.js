@@ -1,5 +1,5 @@
 (() => {
-  const STORAGE_KEY = 'petshop-assistant-prototype-v2';
+  const STORAGE_KEY = 'petshop-assistant-prototype-v4';
   const MAX_MESSAGES = 14;
 
   const catalog = [
@@ -18,6 +18,30 @@
     { id: 'puppy-dog-food', title: 'Organix Puppy с курицей для щенков, 1 кг', pet: 'dog', category: 'dry_food', age: 'young', sterilized: null, price: 899, rating: '4,8', reviews: 326, image: 'product-dog.png', note: 'Для щенков до 12 месяцев', tags: 'собака щенок сухой корм курица рост' },
     { id: 'senior-dog-food', title: 'Savita Senior для собак старше 7 лет, 2 кг', pet: 'dog', category: 'dry_food', age: 'senior', sterilized: null, price: 1650, rating: '4,9', reviews: 284, image: 'product-renal.png', note: 'Для собак старше 7 лет', tags: 'собака пожилая старше 7 лет сухой корм' },
     { id: 'large-dog-food', title: 'Taormina для собак средних и крупных пород, 5 кг', pet: 'dog', category: 'dry_food', age: 'adult', sterilized: null, price: 2949, rating: '4,8', reviews: 604, image: 'product-dog.png', note: 'Большая упаковка · выгодная цена за кг', tags: 'собака средняя крупная порода сухой корм' },
+    { id: 'little-one-ferret', title: 'Little One корм для хорьков, 400 г', pet: 'ferret', category: 'dry_food', age: null, sterilized: null, price: 509, rating: '4,8', reviews: 126, image: 'product-ferret.svg', href: 'catalog.html#other-pets', note: 'Небольшая упаковка · можно попробовать', tags: 'хорек хорьки сухой корм полнорационный little one' },
+    { id: 'padovan-grandmix-ferret', title: 'Padovan GrandMix корм для хорьков, 850 г', pet: 'ferret', category: 'dry_food', age: null, sterilized: null, price: 1149, rating: '4,9', reviews: 84, image: 'product-ferret.svg', href: 'catalog.html#other-pets', note: 'Средняя упаковка · ежедневный рацион', tags: 'хорек хорьки сухой корм padovan grandmix' },
+    { id: 'fiory-ferret', title: 'Fiory Ferret корм для хорьков, 650 г', pet: 'ferret', category: 'dry_food', age: null, sterilized: null, price: 1390, rating: '4,8', reviews: 57, image: 'product-ferret.svg', href: 'catalog.html#other-pets', note: 'Белковый рацион · удобная упаковка', tags: 'хорек хорьки сухой корм fiory белок' },
+    { id: 'versele-laga-ferret', title: 'Versele-Laga Complete Ferret, 750 г', pet: 'ferret', category: 'dry_food', age: null, sterilized: null, price: 1699, rating: '4,9', reviews: 63, image: 'product-ferret.svg', href: 'catalog.html#other-pets', note: 'Полнорационный корм · крупная упаковка', tags: 'хорек хорьки сухой корм versele laga complete' },
+    { id: 'little-one-hamster', title: 'Little One корм для хомяков, 400 г', pet: 'rodent', detail: 'hamster', category: 'dry_food', price: 319, rating: '4,9', reviews: 248, image: 'product-rodent.svg', href: 'catalog.html#other-pets', note: 'Для хомяков · небольшая упаковка', tags: 'грызун хомяк корм little one' },
+    { id: 'fiory-hamster', title: 'Fiory смесь для хомяков, 400 г', pet: 'rodent', detail: 'hamster', category: 'dry_food', price: 429, rating: '4,8', reviews: 137, image: 'product-rodent.svg', href: 'catalog.html#other-pets', note: 'Зерновая смесь · ежедневный рацион', tags: 'грызун хомяк корм fiory смесь' },
+    { id: 'little-one-rat', title: 'Little One корм для крыс, 400 г', pet: 'rodent', detail: 'rat', category: 'dry_food', price: 339, rating: '4,9', reviews: 214, image: 'product-rodent.svg', href: 'catalog.html#other-pets', note: 'Для декоративных крыс', tags: 'грызун крыса корм little one' },
+    { id: 'versele-laga-rat', title: 'Versele-Laga Nature Rat, 500 г', pet: 'rodent', detail: 'rat', category: 'dry_food', price: 599, rating: '4,8', reviews: 92, image: 'product-rodent.svg', href: 'catalog.html#other-pets', note: 'Разнообразная смесь · средняя упаковка', tags: 'грызун крыса корм versele laga' },
+    { id: 'little-one-guinea-pig', title: 'Little One корм для морских свинок, 400 г', pet: 'rodent', detail: 'guinea_pig', category: 'dry_food', price: 349, rating: '4,9', reviews: 306, image: 'product-rodent.svg', href: 'catalog.html#other-pets', note: 'Для морских свинок · витамин C', tags: 'грызун морская свинка корм little one' },
+    { id: 'vitakraft-guinea-pig', title: 'Vitakraft Menu корм для морских свинок, 600 г', pet: 'rodent', detail: 'guinea_pig', category: 'dry_food', price: 649, rating: '4,8', reviews: 118, image: 'product-rodent.svg', href: 'catalog.html#other-pets', note: 'Большая упаковка · растительные компоненты', tags: 'грызун морская свинка корм vitakraft' },
+    { id: 'little-one-chinchilla', title: 'Little One корм для шиншилл, 400 г', pet: 'rodent', detail: 'chinchilla', category: 'dry_food', price: 359, rating: '4,9', reviews: 276, image: 'product-rodent.svg', href: 'catalog.html#other-pets', note: 'Для шиншилл · травы и гранулы', tags: 'грызун шиншилла корм little one' },
+    { id: 'versele-laga-chinchilla', title: 'Versele-Laga Nature Chinchilla, 500 г', pet: 'rodent', detail: 'chinchilla', category: 'dry_food', price: 669, rating: '4,8', reviews: 101, image: 'product-rodent.svg', href: 'catalog.html#other-pets', note: 'Средняя упаковка · разнообразный состав', tags: 'грызун шиншилла корм versele laga' },
+    { id: 'rio-budgie', title: 'RIO корм для волнистых попугаев, 500 г', pet: 'bird', detail: 'budgie', category: 'dry_food', price: 329, rating: '4,9', reviews: 421, image: 'product-bird.svg', href: 'catalog.html#birds', note: 'Для волнистых попугаев', tags: 'птица волнистый попугай корм rio' },
+    { id: 'padovan-budgie', title: 'Padovan GrandMix Cocorite, 400 г', pet: 'bird', detail: 'budgie', category: 'dry_food', price: 449, rating: '4,8', reviews: 163, image: 'product-bird.svg', href: 'catalog.html#birds', note: 'Зерновая смесь · небольшая упаковка', tags: 'птица волнистый попугай корм padovan' },
+    { id: 'rio-parrot', title: 'RIO корм для средних попугаев, 500 г', pet: 'bird', detail: 'parrot', category: 'dry_food', price: 439, rating: '4,9', reviews: 284, image: 'product-bird.svg', href: 'catalog.html#birds', note: 'Для корелл и средних попугаев', tags: 'птица попугай корелла корм rio' },
+    { id: 'padovan-parrot', title: 'Padovan GrandMix Parrocchetti, 850 г', pet: 'bird', detail: 'parrot', category: 'dry_food', price: 699, rating: '4,8', reviews: 126, image: 'product-bird.svg', href: 'catalog.html#birds', note: 'Большая упаковка · зерновая смесь', tags: 'птица попугай корелла корм padovan' },
+    { id: 'rio-canary', title: 'RIO корм для канареек, 500 г', pet: 'bird', detail: 'canary', category: 'dry_food', price: 399, rating: '4,9', reviews: 207, image: 'product-bird.svg', href: 'catalog.html#birds', note: 'Для канареек · ежедневный рацион', tags: 'птица канарейка корм rio' },
+    { id: 'padovan-canary', title: 'Padovan GrandMix Canarini, 1 кг', pet: 'bird', detail: 'canary', category: 'dry_food', price: 749, rating: '4,8', reviews: 88, image: 'product-bird.svg', href: 'catalog.html#birds', note: 'Большая упаковка · зерновая смесь', tags: 'птица канарейка корм padovan' },
+    { id: 'tetramin-fish', title: 'TetraMin корм для тропических рыб, 100 мл', pet: 'fish', detail: 'tropical_fish', category: 'dry_food', price: 399, rating: '4,9', reviews: 318, image: 'product-fish.svg', href: 'catalog.html#fish', note: 'Хлопья для тропических рыб', tags: 'рыбки тропические корм tetra min хлопья' },
+    { id: 'tetra-pro-fish', title: 'TetraPro корм для тропических рыб, 250 мл', pet: 'fish', detail: 'tropical_fish', category: 'dry_food', price: 799, rating: '4,9', reviews: 196, image: 'product-fish.svg', href: 'catalog.html#fish', note: 'Большая банка · чипсы', tags: 'рыбки тропические корм tetra pro' },
+    { id: 'tetra-goldfish', title: 'Tetra Goldfish корм для золотых рыб, 100 мл', pet: 'fish', detail: 'goldfish', category: 'dry_food', price: 429, rating: '4,9', reviews: 241, image: 'product-fish.svg', href: 'catalog.html#fish', note: 'Хлопья для золотых рыб', tags: 'рыбки золотая рыбка корм tetra' },
+    { id: 'tetra-goldfish-pro', title: 'Tetra Goldfish Pro, 250 мл', pet: 'fish', detail: 'goldfish', category: 'dry_food', price: 849, rating: '4,8', reviews: 134, image: 'product-fish.svg', href: 'catalog.html#fish', note: 'Большая банка · ежедневный рацион', tags: 'рыбки золотая рыбка корм tetra pro' },
+    { id: 'tetra-cichlid', title: 'Tetra Cichlid корм для цихлид, 250 мл', pet: 'fish', detail: 'cichlid', category: 'dry_food', price: 699, rating: '4,9', reviews: 172, image: 'product-fish.svg', href: 'catalog.html#fish', note: 'Палочки для цихлид', tags: 'рыбки цихлиды корм tetra' },
+    { id: 'sera-cichlid', title: 'Sera Cichlid Sticks, 250 мл', pet: 'fish', detail: 'cichlid', category: 'dry_food', price: 779, rating: '4,8', reviews: 96, image: 'product-fish.svg', href: 'catalog.html#fish', note: 'Плавающие палочки · средняя банка', tags: 'рыбки цихлиды корм sera' },
     { id: 'van-cat-litter', title: 'Van Cat комкующийся наполнитель без пыли, 5 кг', pet: 'cat', category: 'litter', price: 579, rating: '4,9', reviews: 1230, image: 'product-litter.png', tags: 'кошка кот наполнитель комкующийся без пыли запах' },
     { id: 'ceramic-bowl', title: 'Керамическая миска с нескользящим дном', pet: 'any', category: 'bowl', price: 459, rating: '4,9', reviews: 642, image: 'product-rabbit.jpg', tags: 'миска керамика кормление нескользящий' },
     { id: 'feeding-mat', title: 'Коврик под миски с защитой от воды', pet: 'any', category: 'mat', price: 329, rating: '4,8', reviews: 381, image: 'product-turkey.png', tags: 'коврик миска кормление защита пола вода' },
@@ -32,7 +56,7 @@
   ];
 
   const productById = Object.fromEntries(catalog.map((product) => [product.id, product]));
-  const defaultQuick = ['Корм для кошки', 'Корм для собаки', 'Набор к наполнителю'];
+  const defaultQuick = ['Корм для кошки', 'Корм для собаки', 'Корм для хорька', 'Корм для грызуна', 'Корм для птицы', 'Корм для рыбок'];
   const state = loadState();
   let answerTimer;
 
@@ -42,7 +66,8 @@
       if (saved && Array.isArray(saved.messages)) {
         return {
           messages: saved.messages.slice(-MAX_MESSAGES),
-          pet: saved.pet === 'dog' ? 'dog' : saved.pet === 'cat' ? 'cat' : null,
+          pet: ['cat', 'dog', 'ferret', 'rodent', 'bird', 'fish'].includes(saved.pet) ? saved.pet : null,
+          petDetail: typeof saved.petDetail === 'string' ? saved.petDetail : null,
           lastIntent: saved.lastIntent || null,
           age: ['young', 'adult', 'senior'].includes(saved.age) ? saved.age : null,
           sterilized: typeof saved.sterilized === 'boolean' ? saved.sterilized : null,
@@ -57,7 +82,7 @@
       // A blocked or malformed localStorage must not break the prototype.
     }
     return {
-      messages: [], pet: null, lastIntent: null, age: null, sterilized: null,
+      messages: [], pet: null, petDetail: null, lastIntent: null, age: null, sterilized: null,
       sensitive: false, budget: null, noBudget: false, profileComplete: false,
       pendingQuestion: null
     };
@@ -129,7 +154,7 @@
       <div class="petshop-assistant__messages" aria-live="polite" data-pa-messages></div>
       <footer class="petshop-assistant__composer">
         <form class="petshop-assistant__form" data-pa-form>
-          <input name="message" type="text" maxlength="280" autocomplete="off" aria-label="Сообщение помощнику" placeholder="Например, корм коту до 2 000 ₽">
+          <input name="message" type="text" maxlength="280" autocomplete="off" aria-label="Сообщение помощнику" placeholder="Например, корм хорьку или попугаю">
           <button class="petshop-assistant__send" type="submit" aria-label="Отправить">➜</button>
         </form>
         <p class="petshop-assistant__privacy">Демо работает в браузере и никуда не отправляет ваши сообщения</p>
@@ -175,6 +200,7 @@
         quick: defaultQuick
       }];
       state.pet = null;
+      state.petDetail = null;
       state.lastIntent = null;
       state.age = null;
       state.sterilized = null;
@@ -232,8 +258,26 @@
   }
 
   function detectPet(text) {
+    if (/(хорек|хорьк)/.test(text)) return 'ferret';
+    if (/(грызун|хомяк|хомяч|крыс|морск\w* свин|шиншилл|дегу|кролик|мышк)/.test(text)) return 'rodent';
+    if (/(птиц|попуг|корелл|канар|амадин|какаду|неразлуч)/.test(text)) return 'bird';
+    if (/(рыб|аквариум|цихлид)/.test(text)) return 'fish';
     if (/(собак|собач|пес|псу|щен|дог)/.test(text)) return 'dog';
     if (/(кош|кот|кис|котен)/.test(text)) return 'cat';
+    return null;
+  }
+
+  function detectPetDetail(text) {
+    if (/(хомяк|хомяч)/.test(text)) return 'hamster';
+    if (/(морск\w* свин)/.test(text)) return 'guinea_pig';
+    if (/(шиншилл)/.test(text)) return 'chinchilla';
+    if (/(крыс)/.test(text)) return 'rat';
+    if (/(волнист)/.test(text)) return 'budgie';
+    if (/(канар)/.test(text)) return 'canary';
+    if (/(попуг|корелл|какаду|неразлуч)/.test(text)) return 'parrot';
+    if (/(золот\w* рыб)/.test(text)) return 'goldfish';
+    if (/(цихлид)/.test(text)) return 'cichlid';
+    if (/(тропическ\w* рыб)/.test(text)) return 'tropical_fish';
     return null;
   }
 
@@ -246,7 +290,7 @@
 
   function detectAge(text) {
     if (/(котен|щен|до года|малыш)/.test(text)) return 'young';
-    if (/(старше 7|пожил|возрастн|стареньк|сеньор)/.test(text)) return 'senior';
+    if (/(старше [57]|пожил|возрастн|стареньк|сеньор)/.test(text)) return 'senior';
     if (/(взросл|от года|обычный рацион)/.test(text)) return 'adult';
     return null;
   }
@@ -258,10 +302,17 @@
   }
 
   function profileDescription(pet) {
-    let petLabel = pet === 'dog' ? 'собака' : 'кошка';
-    if (state.age === 'young') petLabel = pet === 'dog' ? 'щенок' : 'котёнок';
-    if (state.age === 'adult') petLabel = pet === 'dog' ? 'взрослая собака' : 'взрослая кошка';
-    if (state.age === 'senior') petLabel = pet === 'dog' ? 'собака старше 7 лет' : 'кошка старше 7 лет';
+    const detailLabels = {
+      hamster: 'хомяк', rat: 'декоративная крыса', guinea_pig: 'морская свинка', chinchilla: 'шиншилла',
+      budgie: 'волнистый попугай', parrot: 'попугай', canary: 'канарейка',
+      goldfish: 'золотые рыбки', tropical_fish: 'тропические рыбки', cichlid: 'цихлиды'
+    };
+    let petLabel = state.petDetail && detailLabels[state.petDetail]
+      ? detailLabels[state.petDetail]
+      : pet === 'dog' ? 'собака' : pet === 'ferret' ? 'хорёк' : pet === 'rodent' ? 'грызун' : pet === 'bird' ? 'птица' : pet === 'fish' ? 'рыбки' : 'кошка';
+    if (state.age === 'young') petLabel = pet === 'dog' ? 'щенок' : pet === 'ferret' ? 'хорёк до года' : 'котёнок';
+    if (state.age === 'adult') petLabel = pet === 'dog' ? 'взрослая собака' : pet === 'ferret' ? 'взрослый хорёк' : 'взрослая кошка';
+    if (state.age === 'senior') petLabel = pet === 'dog' ? 'собака старше 7 лет' : pet === 'ferret' ? 'хорёк старше 5 лет' : 'кошка старше 7 лет';
     if (pet === 'cat' && state.sterilized === true && state.age !== 'young') petLabel = `${petLabel}, стерилизована`;
     if (pet === 'cat' && state.sterilized === false && state.age !== 'young') petLabel = `${petLabel}, не стерилизована`;
     const details = [petLabel];
@@ -270,7 +321,7 @@
     return details.join(', ');
   }
 
-  function productScore(product, { age, sterilized, sensitive }) {
+  function productScore(product, { age, sterilized, sensitive, petDetail }) {
     let score = Number(product.rating.replace(',', '.'));
     if (age) {
       if (product.age === age) score += 5;
@@ -283,15 +334,21 @@
       else score -= 4;
     }
     if (sensitive && product.sensitive) score += 3;
+    if (petDetail) {
+      if (product.detail === petDetail) score += 5;
+      else if (!product.detail) score += 1;
+      else score -= 5;
+    }
     return score;
   }
 
-  function topProducts({ pet, categories, budget, age, sterilized, sensitive, limit = 4 }) {
+  function topProducts({ pet, categories, budget, age, sterilized, sensitive, petDetail, limit = 4 }) {
     return catalog
       .filter((product) => !pet || product.pet === pet || product.pet === 'any')
       .filter((product) => !categories?.length || categories.includes(product.category))
+      .filter((product) => !petDetail || !product.detail || product.detail === petDetail)
       .filter((product) => !budget || product.price <= budget)
-      .sort((a, b) => productScore(b, { age, sterilized, sensitive }) - productScore(a, { age, sterilized, sensitive }) || a.price - b.price)
+      .sort((a, b) => productScore(b, { age, sterilized, sensitive, petDetail }) - productScore(a, { age, sterilized, sensitive, petDetail }) || a.price - b.price)
       .slice(0, limit)
       .map((product) => product.id);
   }
@@ -305,7 +362,9 @@
   function replyFor(rawText) {
     const text = normalize(rawText);
     const detectedPet = detectPet(text);
+    const detectedDetail = detectPetDetail(text);
     if (detectedPet && state.pet && detectedPet !== state.pet) {
+      state.petDetail = null;
       state.age = null;
       state.sterilized = null;
       state.sensitive = false;
@@ -315,6 +374,17 @@
       state.pendingQuestion = null;
     }
     if (detectedPet) state.pet = detectedPet;
+    if (detectedDetail && state.petDetail && detectedDetail !== state.petDetail) {
+      state.age = null;
+      state.sterilized = null;
+      state.sensitive = false;
+      state.budget = null;
+      state.noBudget = false;
+      state.profileComplete = false;
+      state.pendingQuestion = null;
+    }
+    if (detectedDetail) state.petDetail = detectedDetail;
+    if (detectedPet && ['ferret', 'rodent', 'bird', 'fish'].includes(detectedPet) && !['dry_food', 'wet_food'].includes(state.lastIntent)) state.lastIntent = 'dry_food';
     const pet = detectedPet || state.pet;
     const detectedAge = detectAge(text);
     const detectedSterilized = detectSterilized(text);
@@ -386,7 +456,7 @@
     if ((wantsFood || wantsWet) && !pet) {
       state.lastIntent = wantsBundle ? 'food_bundle' : wantsWet ? 'wet_food' : 'dry_food';
       state.pendingQuestion = 'pet';
-      return { text: 'Конечно, помогу. Сначала уточню: корм выбираем кошке или собаке?', products: [], quick: ['Для кошки', 'Для собаки'] };
+      return { text: 'Конечно, помогу. Для кого выбираем?', products: [], quick: defaultQuick };
     }
 
     if (wantsLitter || (wantsBundle && state.lastIntent === 'litter')) {
@@ -430,19 +500,41 @@
       const category = wantsWet || state.lastIntent === 'wet_food' ? 'wet_food' : 'dry_food';
       state.lastIntent = category;
 
-      if (!state.profileComplete && !skipQuestions && !state.age) {
+      if (!state.profileComplete && !skipQuestions) {
+        if (pet === 'rodent' && !state.petDetail) {
+          state.pendingQuestion = 'pet_detail';
+          return { text: 'Понял, корм нужен грызуну. Кто у вас?', products: [], quick: ['Хомяк', 'Декоративная крыса', 'Морская свинка', 'Шиншилла', 'Показать без уточнений'] };
+        }
+        if (pet === 'bird' && !state.petDetail) {
+          state.pendingQuestion = 'pet_detail';
+          return { text: 'Понял, корм нужен птице. Уточните вид — так подборка будет точнее.', products: [], quick: ['Волнистый попугай', 'Средний попугай', 'Канарейка', 'Показать без уточнений'] };
+        }
+        if (pet === 'fish' && !state.petDetail) {
+          state.pendingQuestion = 'pet_detail';
+          return { text: 'Понял, корм нужен рыбкам. Какие рыбки живут в аквариуме?', products: [], quick: ['Тропические рыбки', 'Золотые рыбки', 'Цихлиды', 'Показать без уточнений'] };
+        }
+        if (!state.age && ['cat', 'dog', 'ferret'].includes(pet)) {
         state.pendingQuestion = 'age';
-        return pet === 'cat'
-          ? {
+        if (pet === 'cat') {
+          return {
               text: 'Хорошо. Уточню один момент, чтобы не показывать случайный корм: кошка взрослая, котёнок или старше 7 лет? Она стерилизована?',
               products: [],
               quick: ['Взрослая, стерилизована', 'Взрослая, не стерилизована', 'Котёнок', 'Старше 7 лет', 'Показать без уточнений']
-            }
-          : {
+            };
+        }
+        if (pet === 'ferret') {
+          return {
+            text: 'Понял, корм нужен хорьку. Уточню возраст: он взрослый, младше года или старше 5 лет?',
+            products: [],
+            quick: ['Взрослый хорёк', 'Хорёк до года', 'Старше 5 лет', 'Показать без уточнений']
+          };
+        }
+        return {
               text: 'Расскажите немного о питомце: это взрослая собака, щенок или собака старше 7 лет?',
               products: [],
               quick: ['Взрослая собака', 'Щенок', 'Старше 7 лет', 'Показать без уточнений']
             };
+        }
       }
 
       if (!state.profileComplete && !skipQuestions && !state.budget && !state.noBudget) {
@@ -463,36 +555,67 @@
         age: state.age,
         sterilized: state.sterilized,
         sensitive: state.sensitive,
+        petDetail: state.petDetail,
         limit: 4
       });
       if (!products.length) {
         return {
           text: `В демонстрационном каталоге подходящего варианта${budget ? ` до ${rubles(budget)}` : ''} пока нет. Попробуйте увеличить бюджет или выбрать другую категорию.`,
           products: [],
-          quick: pet === 'dog' ? ['Корм собаке без бюджета'] : ['Корм кошке без бюджета', 'Влажный корм кошке']
+          quick: pet === 'dog'
+            ? ['Корм собаке без бюджета']
+            : pet === 'ferret'
+              ? ['Корм хорьку без бюджета', 'Другие товары для хорьков']
+              : pet === 'rodent'
+                ? ['Корм грызуну без бюджета', 'Другие товары для грызунов']
+                : pet === 'bird'
+                  ? ['Корм птице без бюджета', 'Другие товары для птиц']
+                  : pet === 'fish'
+                    ? ['Корм рыбкам без бюджета', 'Другие товары для рыбок']
+              : ['Корм кошке без бюджета', 'Влажный корм кошке']
         };
       }
-      const petName = pet === 'dog' ? 'собаки' : 'кошки';
+      const petName = pet === 'dog' ? 'собаки' : pet === 'ferret' ? 'хорька' : pet === 'rodent' ? 'грызуна' : pet === 'bird' ? 'птицы' : pet === 'fish' ? 'рыбок' : 'кошки';
       return {
         text: products.length === 1
           ? `Понял: ${profileDescription(pet)}. Пока нашёл один точный вариант для ${petName}. Можно изменить бюджет или параметры — тогда выбор станет шире.`
           : `Понял: ${profileDescription(pet)}. Нашёл ${products.length} разных варианта: от доступной небольшой упаковки до более специализированного рациона. Ниже видно, чем они отличаются.`,
         products,
-        quick: pet === 'cat' ? ['Собрать набор к корму', 'Показать наполнитель'] : ['Показать товары для кошки']
+        quick: pet === 'cat'
+          ? ['Собрать набор к корму', 'Показать наполнитель']
+          : pet === 'ferret'
+            ? ['Показать самый недорогой', 'Другие товары для хорьков']
+            : pet === 'rodent'
+              ? ['Показать самый недорогой', 'Другие товары для грызунов']
+              : pet === 'bird'
+                ? ['Показать самый недорогой', 'Другие товары для птиц']
+                : pet === 'fish'
+                  ? ['Показать самый недорогой', 'Другие товары для рыбок']
+            : ['Показать товары для кошки']
       };
     }
 
     if (pet) {
-      const products = topProducts({ pet, budget, age: state.age, sterilized: state.sterilized, sensitive: state.sensitive, limit: 4 });
+      const products = topProducts({ pet, budget, age: state.age, sterilized: state.sterilized, sensitive: state.sensitive, petDetail: state.petDetail, limit: 4 });
       return {
-        text: `Вот популярные товары для ${pet === 'dog' ? 'собаки' : 'кошки'}${budget ? ` до ${rubles(budget)}` : ''}. Что хотите уточнить: корм, уход или аксессуары?`,
+        text: `Вот популярные товары для ${pet === 'dog' ? 'собаки' : pet === 'ferret' ? 'хорька' : pet === 'rodent' ? 'грызуна' : pet === 'bird' ? 'птицы' : pet === 'fish' ? 'рыбок' : 'кошки'}${budget ? ` до ${rubles(budget)}` : ''}. Что хотите уточнить: корм, уход или аксессуары?`,
         products,
-        quick: pet === 'dog' ? ['Сухой корм для собаки'] : ['Сухой корм для кошки', 'Набор к наполнителю']
+        quick: pet === 'dog'
+          ? ['Сухой корм для собаки']
+          : pet === 'ferret'
+            ? ['Сухой корм для хорька', 'Другие товары для хорьков']
+            : pet === 'rodent'
+              ? ['Корм для грызуна', 'Другие товары для грызунов']
+              : pet === 'bird'
+                ? ['Корм для птицы', 'Другие товары для птиц']
+                : pet === 'fish'
+                  ? ['Корм для рыбок', 'Другие товары для рыбок']
+            : ['Сухой корм для кошки', 'Набор к наполнителю']
       };
     }
 
     return {
-      text: 'Пока я лучше всего умею подбирать корм, наполнитель и дополнения к покупке. Напишите, например: «сухой корм кошке до 2 000 ₽».',
+      text: 'Я умею подбирать корм по виду питомца и бюджету, сравнивать варианты, находить самый доступный и добавлять товары в корзину. Напишите, например: «корм для хорька» или «корм волнистому попугаю до 1 000 ₽».',
       products: [],
       quick: defaultQuick
     };
@@ -514,10 +637,11 @@
   function productList(ids) {
     return `<div class="petshop-assistant__products" aria-label="Рекомендованные товары">${ids.map((id) => {
       const product = productById[id];
+      const productHref = product.href || `catalog.html?product=${encodeURIComponent(product.id)}`;
       return `
         <article class="petshop-assistant-product">
-          <a href="catalog.html?product=${encodeURIComponent(product.id)}" aria-label="Посмотреть ${escapeHtml(product.title)}"><img class="petshop-assistant-product__image" src="assets/${encodeURIComponent(product.image)}" alt=""></a>
-          <a class="petshop-assistant-product__title" href="catalog.html?product=${encodeURIComponent(product.id)}">${escapeHtml(product.title)}</a>
+          <a href="${escapeHtml(productHref)}" aria-label="Посмотреть ${escapeHtml(product.title)}"><img class="petshop-assistant-product__image" src="assets/${encodeURIComponent(product.image)}" alt=""></a>
+          <a class="petshop-assistant-product__title" href="${escapeHtml(productHref)}">${escapeHtml(product.title)}</a>
           <div class="petshop-assistant-product__meta"><b>★ ${product.rating}</b><span>${reviewLabel(product.reviews)}</span></div>
           ${product.note ? `<div class="petshop-assistant-product__hint">${escapeHtml(product.note)}</div>` : ''}
           <div class="petshop-assistant-product__bottom"><span class="petshop-assistant-product__price">${rubles(product.price)}</span><button class="petshop-assistant-product__add" type="button" data-pa-add="${escapeHtml(product.id)}">В корзину</button></div>
