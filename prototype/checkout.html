@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f15a24">
+  <title>Оформление заказа — Petshop</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="cart.css">
+</head>
+<body class="cart-page checkout-page">
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></symbol><symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z"/><circle cx="12" cy="10" r="2"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.7-4.3 3.2-6.5 7-6.5s6.3 2.2 7 6.5"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 8.4c0 5.4-8.8 11-8.8 11s-8.8-5.6-8.8-11A4.7 4.7 0 0 1 12 6.1a4.7 4.7 0 0 1 8.8 2.3Z"/></symbol><symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.2 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 7H6"/><circle cx="10" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></symbol><symbol id="i-box" viewBox="0 0 24 24"><path d="m4 7 8-4 8 4-8 4-8-4Zm0 0v10l8 4 8-4V7M12 11v10"/></symbol><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol><symbol id="i-close" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5 10v11h14V10M9 21v-7h6v7"/></symbol>
+  </svg>
+  <div class="topbar"><div class="shell topbar__inner"><button type="button" data-toast="Город доставки — Санкт-Петербург"><svg><use href="#i-pin"/></svg>Санкт-Петербург</button><span>Доставим сегодня · бесплатно от 549 ₽</span><a href="tel:+78123130101">Помощь 24/7 · +7 (812) 313-01-01</a></div></div>
+  <header class="site-header">
+    <div class="shell header-main"><button class="icon-button mobile-menu" type="button" aria-label="Открыть меню" aria-expanded="false" data-menu-open><svg><use href="#i-menu"/></svg></button><a class="logo" href="index.html" aria-label="Petshop — главная"><img src="assets/petshop-logo.svg" alt="Petshop.ru"></a><a class="catalog-button" href="catalog.html"><svg><use href="#i-grid"/></svg>Каталог</a><form class="search search--desktop" data-search-form><input type="search" placeholder="Искать в Petshop" aria-label="Поиск в Petshop"><button type="submit" aria-label="Найти"><svg><use href="#i-search"/></svg></button></form><nav class="account-nav" aria-label="Личный кабинет"><a href="#" data-toast="Вход доступен в полной версии магазина"><svg><use href="#i-user"/></svg><span>Войти</span></a><a href="#" data-toast="История заказов доступна в полной версии магазина"><svg><use href="#i-box"/></svg><span>Заказы</span></a><a href="#" data-toast="Раздел избранного готовится"><svg><use href="#i-heart"/></svg><span>Избранное</span></a><a href="cart.html" class="cart-link is-current"><svg><use href="#i-cart"/></svg><span>Корзина</span><b data-cart-count>2</b></a></nav><a class="mobile-cart is-current" href="cart.html" aria-label="Корзина"><svg><use href="#i-cart"/></svg><b data-cart-count>2</b></a></div>
+    <div class="shell mobile-search-wrap"><form class="search search--mobile" data-search-form><svg><use href="#i-search"/></svg><input type="search" placeholder="Искать в Petshop" aria-label="Поиск в Petshop"></form></div>
+    <nav class="shell shortcut-nav" aria-label="Разделы магазина"><a href="index.html#catalog">Акции</a><a href="catalog.html?page=cats">Кошки</a><a href="catalog.html?page=dogs">Собаки</a><a href="catalog.html#vet">Ветаптека</a><a href="index.html#auto">Автозаказ</a><span><svg><use href="#i-pin"/></svg> Сегодня с 18:00</span></nav>
+  </header>
+  <main class="shell cart-main">
+    <nav class="cart-breadcrumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a><span>›</span><a href="cart.html">Корзина</a><span>›</span><b>Оформление</b></nav>
+    <div class="cart-heading"><div><h1>Оформление заказа</h1><p>Адрес, время и контакты получателя</p></div><a href="cart.html">Вернуться в корзину</a></div>
+    <div class="checkout-layout" data-checkout-layout>
+      <form class="checkout-form" data-checkout-form>
+        <section><h2>Доставка</h2><label>Адрес<input name="address" autocomplete="street-address" required placeholder="Санкт-Петербург, улица, дом, квартира"></label><label>Интервал<select name="deliveryTime" required><option value="">Выберите время</option><option>Сегодня, 18:00–20:00</option><option>Сегодня, 20:00–22:00</option><option>Завтра, 10:00–12:00</option></select></label></section>
+        <section><h2>Получатель</h2><div class="checkout-fields"><label>Имя<input name="name" autocomplete="name" required placeholder="Александр"></label><label>Телефон<input name="phone" autocomplete="tel" required inputmode="tel" pattern="[+0-9 ()-]{10,}" placeholder="+7 999 123-45-67"></label></div></section>
+        <label class="checkout-consent"><input type="checkbox" required> <span>Согласен с условиями оформления тестового заказа</span></label>
+        <button type="submit">Подтвердить заказ</button>
+      </form>
+      <aside class="cart-summary checkout-summary" data-checkout-summary></aside>
+    </div>
+    <section class="checkout-success" hidden tabindex="-1" data-checkout-success><span>✓</span><h1>Заказ оформлен</h1><p>Это демонстрационный заказ прототипа. Никакие данные никуда не отправлены.</p><a href="index.html">Вернуться на главную</a></section>
+  </main>
+  <nav class="mobile-bottom-nav" aria-label="Мобильная навигация"><a href="index.html"><svg><use href="#i-home"/></svg><span>Главная</span></a><a href="catalog.html"><svg><use href="#i-grid"/></svg><span>Каталог</span></a><a href="#" data-focus-search><svg><use href="#i-search"/></svg><span>Поиск</span></a><a href="#" data-toast="История заказов доступна в полной версии магазина"><svg><use href="#i-box"/></svg><span>Заказы</span></a><a class="is-active" href="cart.html"><svg><use href="#i-cart"/></svg><span>Корзина</span><b data-cart-count>2</b></a></nav>
+  <aside class="mobile-drawer" aria-hidden="true" data-mobile-drawer><div class="mobile-drawer__panel"><div class="mobile-drawer__head"><a class="logo" href="index.html"><img src="assets/petshop-logo.svg" alt="Petshop.ru"></a><button class="icon-button" type="button" aria-label="Закрыть меню" data-menu-close><svg><use href="#i-close"/></svg></button></div><nav><a href="catalog.html">Каталог</a><a href="catalog.html?page=cats">Кошки</a><a href="catalog.html?page=dogs">Собаки</a><a href="cart.html">Корзина</a></nav></div></aside>
+  <div class="toast" role="status" aria-live="polite" data-toast-box></div><script src="cart-store.js"></script><script src="script.js"></script><script src="checkout.js"></script>
+</body>
+</html>

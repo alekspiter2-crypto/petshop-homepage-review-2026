@@ -12,12 +12,6 @@ function showToast(message) {
   toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2400);
 }
 
-function changeCart(delta) {
-  $$('[data-cart-count]').forEach((counter) => {
-    counter.textContent = Math.max(0, (Number(counter.textContent) || 0) + delta);
-  });
-}
-
 function galleryFiles(slug, count, jpgIndexes = []) {
   return Array.from({ length: count }, (_, index) => {
     const number = index + 1;
@@ -93,7 +87,7 @@ function productCard(product) {
         <span class="rating__star">★</span><b>${product.rating}</b><span>· ${product.reviews}</span>
       </div>
       <div class="delivery"><i></i>${product.delivery}</div>
-      <button class="add-cart" type="button" aria-label="Добавить товар в корзину" aria-pressed="false" data-add-cart><svg><use href="#i-cart"/></svg><span>В корзину</span></button>
+      <button class="add-cart" type="button" aria-label="Добавить товар в корзину" aria-pressed="false" data-add-cart data-product-id="${product.gallery}"><svg><use href="#i-cart"/></svg><span>В корзину</span></button>
     </article>
   `;
 }
@@ -133,17 +127,72 @@ function feedBatch(index) {
 
 const feed = $('[data-product-feed]');
 const feedSentinel = $('[data-feed-sentinel]');
+const feedTitle = $('[data-feed-title]');
+const feedSubtitle = $('[data-feed-subtitle]');
+const initialSearch = new URLSearchParams(window.location.search).get('search')?.trim() || '';
+let activeFilter = 'all';
+let searchQuery = initialSearch;
 let batchIndex = 0;
 let feedLoading = false;
+
+function uniqueProducts() {
+  return products.filter((product, index) => products.findIndex((item) => item.gallery === product.gallery) === index);
+}
+
+function currentProducts() {
+  const query = searchQuery.toLocaleLowerCase('ru');
+  return uniqueProducts().filter((product) => {
+    const matchesQuery = !query || `${product.title} ${product.gallery}`.toLocaleLowerCase('ru').includes(query);
+    const matchesFilter = activeFilter === 'all'
+      || (activeFilter === 'sale' && (product.badge.includes('−') || product.badge === 'Цена дня'))
+      || (activeFilter === 'cats' && product.gallery !== 'gokitchen')
+      || (activeFilter === 'dogs' && product.gallery === 'gokitchen');
+    return matchesQuery && matchesFilter;
+  });
+}
+
+function syncProductButtons() {
+  if (!window.PetshopCart) return;
+  const ids = new Set(window.PetshopCart.read().map((item) => item.id));
+  $$('[data-add-cart]').forEach((button) => {
+    const added = ids.has(button.dataset.productId);
+    button.classList.toggle('is-added', added);
+    button.setAttribute('aria-pressed', String(added));
+    button.setAttribute('aria-label', added ? 'Перейти в корзину' : 'Добавить товар в корзину');
+  });
+}
+
+function renderFeed() {
+  if (!feed) return;
+  feed.innerHTML = '';
+  batchIndex = 0;
+  const isFiltered = activeFilter !== 'all' || Boolean(searchQuery);
+  if (!isFiltered) {
+    feedSentinel.hidden = false;
+    appendFeedBatch();
+    appendFeedBatch();
+    if (feedTitle) feedTitle.textContent = 'Для вас';
+    if (feedSubtitle) feedSubtitle.textContent = 'Товары для Барсика, выгодные цены и быстрая доставка';
+  } else {
+    const matches = currentProducts();
+    feedSentinel.hidden = true;
+    feed.innerHTML = matches.length
+      ? `<section class="feed-batch" aria-label="Результаты"><div class="product-grid">${matches.map(productCard).join('')}</div></section>`
+      : `<div class="feed-empty"><span>🐾</span><h3>Ничего не нашли</h3><p>Попробуйте другое название или сбросьте фильтр.</p><button type="button" data-reset-feed>Показать все товары</button></div>`;
+    if (feedTitle) feedTitle.textContent = searchQuery ? `Поиск: ${searchQuery}` : $('[data-product-filter].is-active')?.textContent || 'Товары';
+    if (feedSubtitle) feedSubtitle.textContent = matches.length ? `Найдено товаров: ${matches.length}` : 'Измените запрос или фильтр';
+  }
+  syncProductButtons();
+}
 
 function appendFeedBatch() {
   if (!feed) return;
   feed.insertAdjacentHTML('beforeend', feedBatch(batchIndex));
   batchIndex += 1;
+  syncProductButtons();
 }
 
-appendFeedBatch();
-appendFeedBatch();
+renderFeed();
 
 if (feed && feedSentinel && 'IntersectionObserver' in window) {
   const observer = new IntersectionObserver((entries) => {
@@ -151,7 +200,7 @@ if (feed && feedSentinel && 'IntersectionObserver' in window) {
     feedLoading = true;
     feedSentinel.lastChild.textContent = ' Загружаем продолжение';
     setTimeout(() => {
-      appendFeedBatch();
+      if (activeFilter === 'all' && !searchQuery) appendFeedBatch();
       feedLoading = false;
       feedSentinel.lastChild.textContent = ' Подбираем ещё товары';
     }, 260);
@@ -159,13 +208,39 @@ if (feed && feedSentinel && 'IntersectionObserver' in window) {
   observer.observe(feedSentinel);
 }
 
+function performSearch(form) {
+  const query = $('input', form)?.value.trim();
+    if (!query) {
+      showToast('Напишите, что нужно найти');
+      return;
+    }
+    if (!feed) {
+      window.location.href = `index.html?search=${encodeURIComponent(query)}#catalog`;
+      return;
+    }
+    searchQuery = query;
+    $$('[data-search-form] input').forEach((input) => { input.value = query; });
+    renderFeed();
+    $('#catalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    showToast(`Показали результаты по запросу «${query}»`);
+}
+
 $$('[data-search-form]').forEach((form) => {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const query = $('input', form)?.value.trim();
-    showToast(query ? `Ищем «${query}»` : 'Напишите, что нужно найти');
+    performSearch(form);
+  });
+  $('input', form)?.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    performSearch(form);
   });
 });
+
+if (initialSearch) {
+  $$('[data-search-form] input').forEach((input) => { input.value = initialSearch; });
+  requestAnimationFrame(() => $('#catalog')?.scrollIntoView({ block: 'start' }));
+}
 
 document.addEventListener('click', (event) => {
   const previewStep = event.target.closest('[data-preview-step]');
@@ -185,10 +260,20 @@ document.addEventListener('click', (event) => {
 
   const addButton = event.target.closest('[data-add-cart]');
   if (addButton) {
-    const added = addButton.classList.toggle('is-added');
-    addButton.setAttribute('aria-pressed', String(added));
-    changeCart(added ? 1 : -1);
-    showToast(added ? 'Товар добавлен в корзину' : 'Товар убран из корзины');
+    if (addButton.classList.contains('is-added')) {
+      window.location.href = `cart.html?focus=${encodeURIComponent(addButton.dataset.productId)}`;
+      return;
+    }
+    const product = products.find((item) => item.gallery === addButton.dataset.productId);
+    if (!product || !window.PetshopCart) return;
+    window.PetshopCart.add({
+      id: product.gallery,
+      title: product.title,
+      price: Number(product.price.replace(/\D/g, '')),
+      image: productGalleries[product.gallery][0]
+    });
+    syncProductButtons();
+    showToast('Товар добавлен в корзину');
     return;
   }
 
@@ -203,13 +288,39 @@ document.addEventListener('click', (event) => {
 
   const repeatButton = event.target.closest('[data-repeat-order]');
   if (repeatButton) {
-    changeCart(3);
+    ['savita', 'organix', 'vancat'].forEach((id) => {
+      const product = products.find((item) => item.gallery === id);
+      window.PetshopCart?.add({ id, title: product.title, price: Number(product.price.replace(/\D/g, '')), image: productGalleries[id][0] });
+    });
+    syncProductButtons();
     showToast('Прошлый заказ добавлен в корзину');
     return;
   }
 
+  const resetFeed = event.target.closest('[data-reset-feed]');
+  if (resetFeed) {
+    searchQuery = '';
+    activeFilter = 'all';
+    $$('[data-search-form] input').forEach((input) => { input.value = ''; });
+    $$('[data-product-filter]').forEach((button) => button.classList.toggle('is-active', button.dataset.productFilter === 'all'));
+    renderFeed();
+    return;
+  }
+
+  const focusSearch = event.target.closest('[data-focus-search]');
+  if (focusSearch) {
+    event.preventDefault();
+    const input = $('.search--mobile input') || $('[data-search-form] input');
+    input?.focus();
+    input?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
   const toastElement = event.target.closest('[data-toast]');
-  if (toastElement) showToast(toastElement.dataset.toast);
+  if (toastElement) {
+    if (toastElement.matches('a[href="#"]')) event.preventDefault();
+    showToast(toastElement.dataset.toast);
+  }
 });
 
 function setCardPreview(visual, index) {
@@ -257,20 +368,29 @@ $('[data-scroll-catalog]')?.addEventListener('click', () => {
   $('#catalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
-$$('.discovery-tabs button').forEach((button) => {
+$$('[data-product-filter]').forEach((button) => {
   button.addEventListener('click', () => {
-    $$('.discovery-tabs button').forEach((item) => item.classList.toggle('is-active', item === button));
+    $$('[data-product-filter]').forEach((item) => item.classList.toggle('is-active', item === button));
+    activeFilter = button.dataset.productFilter;
+    renderFeed();
   });
 });
 
 const drawer = $('[data-mobile-drawer]');
 const menuButton = $('[data-menu-open]');
+const drawerPageRoots = $$('.topbar, .site-header, main, .footer, .mobile-bottom-nav');
+let focusBeforeDrawer;
 
 function setDrawer(open) {
+  if (!drawer) return;
+  if (open) focusBeforeDrawer = document.activeElement;
   drawer?.classList.toggle('is-open', open);
   drawer?.setAttribute('aria-hidden', String(!open));
   menuButton?.setAttribute('aria-expanded', String(open));
   document.body.classList.toggle('drawer-open', open);
+  drawerPageRoots.forEach((element) => { element.inert = open; });
+  if (open) $('[data-menu-close]', drawer)?.focus({ preventScroll: true });
+  else if (focusBeforeDrawer instanceof HTMLElement) focusBeforeDrawer.focus();
 }
 
 menuButton?.addEventListener('click', () => setDrawer(true));
@@ -279,6 +399,24 @@ drawer?.addEventListener('click', (event) => {
   if (event.target === drawer) setDrawer(false);
 });
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') setDrawer(false);
+  if (event.key === 'Escape' && drawer?.classList.contains('is-open')) {
+    setDrawer(false);
+    return;
+  }
+  if (event.key !== 'Tab' || !drawer?.classList.contains('is-open')) return;
+  const focusable = $$('a[href], button:not([disabled])', drawer).filter((element) => !element.hidden);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (!drawer.contains(document.activeElement)) {
+    event.preventDefault();
+    (event.shiftKey ? last : first).focus();
+  } else if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
 });
 $$('.mobile-drawer a').forEach((link) => link.addEventListener('click', () => setDrawer(false)));

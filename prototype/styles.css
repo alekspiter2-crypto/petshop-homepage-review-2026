@@ -161,6 +161,11 @@ svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width:
 .promo-strip img { position: absolute; z-index: 2; right: 18px; bottom: -20px; width: 92px; height: 92px; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(0,0,0,.14)); }
 .feed-loader { height: 72px; display: flex; align-items: center; justify-content: center; gap: 8px; color: #85888d; font-size: 11px; font-weight: 650; }
 .feed-loader span { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #fff0e9; animation: loader-pulse 1.4s ease-in-out infinite; }
+.feed-empty { min-height: 260px; display: grid; place-items: center; align-content: center; padding: 28px; border-radius: 18px; background: #fff; text-align: center; }
+.feed-empty > span { font-size: 36px; }
+.feed-empty h3 { margin: 10px 0 4px; font-size: 20px; }
+.feed-empty p { margin: 0; color: var(--muted); font-size: 12px; }
+.feed-empty button { height: 38px; margin-top: 15px; padding: 0 15px; border: 0; border-radius: 10px; background: var(--orange); color: #fff; font-size: 11px; font-weight: 750; cursor: pointer; }
 @keyframes loader-pulse { 50% { transform: scale(1.12); } }
 
 .auto-banner { position: relative; min-height: 146px; display: flex; align-items: center; gap: 18px; margin-top: 26px; margin-bottom: 34px; padding: 24px 190px 24px 28px; overflow: hidden; border-radius: 22px; background: linear-gradient(100deg, #5b3db5, #7657cd 62%, #a68bea); color: #fff; }
