@@ -248,7 +248,7 @@
     const wantsBundle = /(набор|вместе|дополн|комплект)/.test(text);
 
     if ((wantsFood || wantsWet) && !pet) {
-      state.lastIntent = wantsWet ? 'wet_food' : 'dry_food';
+      state.lastIntent = wantsBundle ? 'food_bundle' : wantsWet ? 'wet_food' : 'dry_food';
       return { text: 'Уточните, пожалуйста: корм нужен кошке или собаке?', products: [], quick: ['Для кошки', 'Для собаки'] };
     }
 
@@ -275,6 +275,19 @@
         : { text: 'В демо-каталоге пока есть игрушка только для кошки. Для собак расширим выбор на следующем этапе.', products: [], quick: ['Показать корм для собаки'] };
     }
 
+    if (wantsBundle || state.lastIntent === 'food_bundle') {
+      const bundlePet = pet || 'cat';
+      state.lastIntent = 'food_bundle';
+      const products = topProducts({ pet: bundlePet, categories: ['bowl', 'mat', 'wet_food', 'toy'], budget, limit: 4 });
+      return {
+        text: bundlePet === 'cat'
+          ? 'К сухому корму рекомендую миску, защитный коврик, влажный рацион и игрушку. Можно добавить только нужное.'
+          : 'К сухому корму рекомендую устойчивую миску и коврик под неё. Собачьи игрушки добавим в полный каталог.',
+        products,
+        quick: ['Показать корм', 'Набор к наполнителю']
+      };
+    }
+
     if (wantsFood || wantsWet || state.lastIntent === 'dry_food' || state.lastIntent === 'wet_food') {
       const category = wantsWet || state.lastIntent === 'wet_food' ? 'wet_food' : 'dry_food';
       state.lastIntent = category;
@@ -291,18 +304,6 @@
         text: `Подобрал ${products.length === 1 ? 'лучший вариант' : 'варианты'} для ${petName}${budget ? ` в бюджете до ${rubles(budget)}` : ''}. Смотрите рейтинг и размер упаковки.`,
         products,
         quick: pet === 'cat' ? ['Собрать набор к корму', 'Показать наполнитель'] : ['Показать товары для кошки']
-      };
-    }
-
-    if (wantsBundle) {
-      const bundlePet = pet || 'cat';
-      const products = topProducts({ pet: bundlePet, categories: ['bowl', 'mat', 'wet_food', 'toy'], budget, limit: 4 });
-      return {
-        text: bundlePet === 'cat'
-          ? 'К сухому корму рекомендую миску, защитный коврик, влажный рацион и игрушку. Можно добавить только нужное.'
-          : 'К сухому корму рекомендую устойчивую миску и коврик под неё. Собачьи игрушки добавим в полный каталог.',
-        products,
-        quick: ['Показать корм', 'Набор к наполнителю']
       };
     }
 
